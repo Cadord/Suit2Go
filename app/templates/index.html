@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Produtos</title>
+</head>
+<body>
+    {% block content %}
+    {% for roupa in roupas %}
+    <a class='roupa' href="roupa/{{roupa.id_roupas}}">
+       <button  class="botao_roupa">{{roupa.nome}}</button>
+    </a>
+    {% endfor %}
+        {% endblock %}
+</body>
+</html>

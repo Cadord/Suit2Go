@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Roupa</title>
+</head>
+<body>
+{% block content %}
+        <p class="tópico_roupa">{{roupa.nome}}</p>
+        <p class="tópico_roupa">Categoria: {{roupa.categoria}}</p>
+        <p class="tópico_roupa">Tamanho: {{roupa.tamanho}}</p>
+        <p class="tópico_roupa">Cor: {{roupa.cor}}</p>
+        <p class="tópico_roupa">Estilo: {{roupa.estilo}}</p>
+        <p class="tópico_roupa">Preço aluguel: {{roupa.preco_aluguel}}</p>
+        <p class="tópico_roupa">Peças disponíveis: {{roupa.disponibilidade}}</p>
+{% endblock %}
+</body>
+</html>
