@@ -1,16 +1,41 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <title>Produtos</title>
-</head>
-<body>
-    {% block content %}
-    {% for roupa in roupas %}
-    <a class='roupa' href="roupa/{{roupa.id_roupas}}">
-       <button  class="botao_roupa">{{roupa.nome}}</button>
-    </a>
-    {% endfor %}
-        {% endblock %}
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="py-5 text-center container">
+    <div class="row py-lg-5">
+        <div class="col-lg-6 col-md-8 mx-auto">
+            <h1 class="fw-light">GostosoTudo</h1>
+            <p class="lead text-body-secondary">Não confundir com TudoGostoso</p>
+        </div>
+    </div>
+</section>
+<div class="py-5 bg-body-tertiary">
+    <div class="container">
+
+
+        {% if ultimas_receitas %}
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+            {% for roupa in roupas %}
+            <div class="col">
+                <div class="card shadow-sm">
+                    <img src="{{roupa.foto_roupa}}" class="card-img-top" alt="{{ roupa.nome }}" width="400" height="300" />
+                    <div class="card-body">
+                        <p class="card-text">{{ roupa.noma }}</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <a href="{% url 'roupa' roupa_id=roupa.id %}" class="btn btn-primary stretched-link">Ver</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="row">
+            <div class="col-12 text-center">
+                <h1>Nenhuma receita encontrada...</h1>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

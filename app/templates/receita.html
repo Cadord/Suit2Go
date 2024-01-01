@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}GostosoTudo - {{receita.titulo}}{% endblock %}
+
+{% block content %}
+<section class="py-5 text-center container bg-image" style="background-image: url(/{{receita.foto_receita}});">
+    <div class="row py-lg-5">
+        <div class="col-lg-6 col-md-8 mx-auto bg-white bg-opacity-75">
+            <h1 class="fw-light">{{receita.titulo}}</h1>
+            <p class="lead text-body-secondary">por: {{ receita.autor}} - em: {{ receita.data_receita }}</p>
+        </div>
+    </div>
+</section>
+<div class="py-5 bg-body-tertiary">
+    <div class="container">
+        <h3>Ingredientes</h3>
+        <p>{{ receita.ingredientes|linebreaks }}</p>
+
+        <h3>Modo de preparo</h3>
+        <p>{{ receita.descricao|linebreaks }}</p>
+
+        <h3>rendimento</h3>
+        <p>{{ receita.rendimento }}</p>
+    </div>
+</div>
+{% endblock %}
