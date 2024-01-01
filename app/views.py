@@ -1,12 +1,20 @@
 from django.shortcuts import render
 from .models import Roupas
 from .forms import RoupasForms
+from django.db.models import Q
 
 
 # Create your views here.
 def index(request):
-    context = {'roupas': Roupas.objects.all}
-    return render(request, 'index.html', context)
+    query = request.GET.get('q', '')
+    ultimas_roupas_query = Roupas.objects
+    if (query):
+        ultimas_roupas_query = ultimas_roupas_query.filter(Q(nome__icontains=query))
+    ultimas_roupas = ultimas_roupas_query.order_by('nome').all
+    context = {
+        "roupas": ultimas_roupas
+    }
+    return render(request, "index.html", context)
 
 
 def cadastro_roupa(request):

@@ -1,23 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Cadastrar roupa</title>
-</head>
-<body>
+{% extends 'base.html' %}
+
+{% block title %}Suit2Go - Cadastrar roupa{% endblock %}
+
 {% block content %}
-<form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
+<div class="py-5 bg-body-tertiary">
+    <div class="container">
+        <h1>Tela de cadastro</h1>
+        <form method="post" action="{% url 'cadastro_roupa' %}" enctype="multipart/form-data">
+            {% csrf_token %}
 
-        {% if form.errors %}
-            <p>Erros no formulário. Corrija-os e tente novamente.</p>
-        {% endif %}
+            {% if form.errors %}
+                <p>Erros no formulário. Corrija-os e tente novamente.</p>
+            {% endif %}
 
-        {{ form.as_p }}
+            {{ form.as_p }}
 
-        <input type="submit" value="Cadastrar">
-    </form>
+            <button class="btn btn-primary" type="submit">Salvar</button>
+        </form>
+    </div>
+</div>
 {% endblock %}
-
-</body>
-</html>

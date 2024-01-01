@@ -4,25 +4,23 @@
 <section class="py-5 text-center container">
     <div class="row py-lg-5">
         <div class="col-lg-6 col-md-8 mx-auto">
-            <h1 class="fw-light">GostosoTudo</h1>
-            <p class="lead text-body-secondary">Não confundir com TudoGostoso</p>
+            <h1 class="fw-light">Suit2Go</h1>
+            <p class="lead text-body-secondary">Uma nova experiência para sua viagem</p>
         </div>
     </div>
 </section>
 <div class="py-5 bg-body-tertiary">
     <div class="container">
-
-
-        {% if ultimas_receitas %}
+        {% if roupas %}
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
             {% for roupa in roupas %}
             <div class="col">
                 <div class="card shadow-sm">
                     <img src="{{roupa.foto_roupa}}" class="card-img-top" alt="{{ roupa.nome }}" width="400" height="300" />
                     <div class="card-body">
-                        <p class="card-text">{{ roupa.noma }}</p>
+                        <p class="card-text">{{ roupa.nome }}</p>
                         <div class="d-flex justify-content-between align-items-center">
-                            <a href="{% url 'roupa' roupa_id=roupa.id %}" class="btn btn-primary stretched-link">Ver</a>
+                            <a href="{% url 'roupa' idroupa=roupa.id_roupas %}" class="btn btn-primary stretched-link">Ver</a>
                         </div>
                     </div>
                 </div>
@@ -32,7 +30,7 @@
         {% else %}
         <div class="row">
             <div class="col-12 text-center">
-                <h1>Nenhuma receita encontrada...</h1>
+                <h1>Nenhuma roupa encontrada...</h1>
             </div>
         </div>
         {% endif %}

@@ -1,10 +1,7 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <title>Roupa</title>
-</head>
-<body>
+{% extends 'base.html' %}
+
+{% block title %}Suit2Go - Roupa{% endblock %}
+
 {% block content %}
         <p class="tópico_roupa">{{roupa.nome}}</p>
         <p class="tópico_roupa">Categoria: {{roupa.categoria}}</p>
@@ -14,5 +11,3 @@
         <p class="tópico_roupa">Preço aluguel: {{roupa.preco_aluguel}}</p>
         <p class="tópico_roupa">Peças disponíveis: {{roupa.disponibilidade}}</p>
 {% endblock %}
-</body>
-</html>

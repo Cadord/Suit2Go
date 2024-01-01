@@ -9,19 +9,6 @@ from django.db import models
 from datetime import datetime
 
 
-class AppRoupas(models.Model):
-    id_roupas = models.AutoField(primary_key=True)
-    nome = models.CharField(max_length=200, blank=True, null=True)
-    categoria = models.CharField(max_length=200, blank=True, null=True)
-    tamanho = models.IntegerField(blank=True, null=True)
-    cor = models.CharField(max_length=200, blank=True, null=True)
-    estilo = models.CharField(max_length=200, blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'app_roupas'
-
-
 class AuthGroup(models.Model):
     name = models.CharField(unique=True, max_length=150)
 
@@ -168,7 +155,7 @@ class Roupas(models.Model):
     tamanho = models.IntegerField(blank=True, null=True)
     cor = models.CharField(max_length=200, blank=True, null=True)
     estilo = models.CharField(max_length=200, blank=True, null=True)
-    preço_aluguel = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+    preco_aluguel = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
     disponibilidade = models.IntegerField(blank=True, null=True)
 
     class Meta:
