@@ -76,7 +76,7 @@ WSGI_APPLICATION = 'suit2go.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'aluguel_roupas',
+        'NAME': 'suit2go',
         'USER': 'root',
         'PASSWORD': 'hurloon',
         'HOST': 'localhost',
