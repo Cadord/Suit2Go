@@ -43,7 +43,7 @@ class Roupas(models.Model):
     estilo = models.CharField(max_length=200, blank=True, null=True)
     preco_aluguel = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
     disponibilidade = models.IntegerField(blank=True, null=True)
-    foto = models.ImageField(upload_to='media/%Y/%m/%d/', blank=True, null=True)
+    foto = models.ImageField(upload_to='%Y/%m/%d/', blank=True, null=True)
 
     class Meta:
         managed = True
