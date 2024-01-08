@@ -6,6 +6,33 @@
         <div class="col-lg-6 col-md-8 mx-auto">
             <h1 class="fw-light">Suit2Go</h1>
             <p class="lead text-body-secondary">Uma nova experiência para sua viagem</p>
+
+            <!-- Move the search box here -->
+            <form class="d-flex mt-3" role="search" action="{% url 'home' %}" method="get">
+                <input class="form-control me-2" type="search" name="q" placeholder="Pesquisar" aria-label="Pesquisar">
+                <button class="btn btn-outline-success" type="submit">Pesquisar</button>
+            </form>
+            <div class="row mt-4">
+                <div class="col-4">
+                    <a href="#" class="category-icon">
+                        <i class="bi bi-airplane-engines"></i>
+                        <p class="mt-2 mb-0">Viagens</p>
+                    </a>
+                </div>
+                <div class="col-4">
+                    <a href="#" class="category-icon">
+                        <i class="bi bi-airplane-engines"></i>
+                        <p class="mt-2 mb-0">Viagens</p>
+                    </a>
+                </div>
+                <div class="col-4">
+                    <a href="#" class="category-icon">
+                        <i class="bi bi-airplane-engines"></i>
+                        <p class="mt-2 mb-0">Viagens</p>
+                    </a>
+                </div>
+                <!-- Add more columns with icons and names as needed -->
+            </div>
         </div>
     </div>
 </section>

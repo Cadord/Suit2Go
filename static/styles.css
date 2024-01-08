@@ -3,3 +3,16 @@
     background-size: cover;
     background-position: center center;
 }
+
+.category-icon {
+    font-size: large;
+    color: black;
+    text-decoration: none;
+    font-weight: 500;
+
+
+}
+
+.category-icon i {
+    font-size: 35px;
+}

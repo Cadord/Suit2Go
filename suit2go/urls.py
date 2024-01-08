@@ -18,12 +18,16 @@ from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path, include
+from django.urls import path
+from allauth.account.views import LoginView
 
 urlpatterns = [
     path('', include('app.urls')),
     path('admin/', admin.site.urls),
     path('cadastro_roupa/', include('app.urls')),
     path('roupas/', include('app.urls')),
+    path('accounts/', include("allauth.urls")),
+
 ]
 
 if settings.DEBUG:
