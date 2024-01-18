@@ -13,4 +13,5 @@
         <p class="tópico_roupa">Preço aluguel: <strong> R$ {{roupa.preco_aluguel}}</strong></p>
         <p class="tópico_roupa">Peças disponíveis: <strong>{{roupa.disponibilidade}}</strong></p>
 </div>
+<a href="{% url 'aluguel' idroupa=roupa.id_roupas %}" class="btn btn-primary stretched-link">Ver</a>
 {% endblock %}

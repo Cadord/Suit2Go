@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block title %}Suit2Go - Alugar{% endblock %}
+
+{% block content %}
+<form method="post" action="{% url 'aluguel' idroupa=roupa.id_roupas %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Enviar</button>
+</form>
+{% endblock %}
