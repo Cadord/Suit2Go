@@ -1,7 +1,10 @@
-from django.shortcuts import render
 from .models import Roupas
 from .forms import RoupasForms, DateForm
 from django.db.models import Q
+from django.shortcuts import render, redirect
+from allauth.socialaccount.models import SocialAccount
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import logout
 from time import sleep
 from datetime import datetime, time, timedelta, date
 from google.oauth2.credentials import Credentials
@@ -73,6 +76,7 @@ def cadastro_roupa(request):
 def roupa_dinamico(request,idroupa):
     context = {'roupa':Roupas.objects.get(id_roupas=idroupa)}
     return render(request,'roupa.html',context)
+    
 def aluguel(request, idroupa):
     form = DateForm()
     if request.method == 'POST':
@@ -100,3 +104,19 @@ def aluguel(request, idroupa):
 
 
     return render(request, 'alugar.html',{'form':form,'roupa':Roupas.objects.get(id_roupas=idroupa)})
+def home(request):
+    try:
+        social_account = SocialAccount.objects.get(user=request.user, provider='google')
+        user_name = social_account.extra_data.get('name', '')
+    except SocialAccount.DoesNotExist:
+        user_name = ''
+
+    return render(request, 'home.html', {'user_name': user_name})
+
+def user_profile(request):
+    return render(request, 'user_profile.html')
+
+def logout_view(request):
+    logout(request)
+    return redirect("/")
+    

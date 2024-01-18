@@ -24,8 +24,6 @@ from allauth.account.views import LoginView
 urlpatterns = [
     path('', include('app.urls')),
     path('admin/', admin.site.urls),
-    path('cadastro_roupa/', include('app.urls')),
-    path('roupas/', include('app.urls')),
     path('accounts/', include("allauth.urls")),
 
 ]

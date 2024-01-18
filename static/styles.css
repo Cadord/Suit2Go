@@ -57,11 +57,14 @@
   height: 10vh;
 }
 
-.form-control.me-2 {
-  width: 12vw;
-  height: 5vh;
-  font-size: 2vh;
-}
+/*.
+CASO ESSA ALTERAÇÃO DE LAYOUT ESTEJA SENDO USADA PARA OUTRA COISA, CRIE UMA CLASSE ESPECÍFICA PARA ELA
+form-control.me-2 {
+width: 12vw;
+height: 5vh;
+font-size: 2vh;
+} 
+*/
 
 .btn.btn-outline-success {
   width: 8vw;
