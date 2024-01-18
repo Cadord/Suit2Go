@@ -43,7 +43,7 @@
             {% for roupa in roupas %}
             <div class="col">
                 <div class="card shadow-sm">
-                    <img src="media/{{roupa.foto}}" class="card-img-top" alt="{{ roupa.nome }}" width="400" height="300" />
+                    <img src="{{roupa.foto.url}}" class="card-img-top" alt="{{ roupa.nome }}" width="400" height="300" />
                     <div class="card-body">
                         <p class="card-text">{{ roupa.nome }}</p>
                         <div class="d-flex justify-content-between align-items-center">

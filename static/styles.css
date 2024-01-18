@@ -1,87 +1,72 @@
 .bg-image {
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
 }
 
-.category-icon {
-    font-size: large;
-    color: black;
-    text-decoration: none;
-    font-weight: 500;
-
-
-}
-
-.category-icon i {
-    font-size: 35px;
-}.imagem_roupa {
-display: flex;
-border-radius: 10px;
-margin: 1% 1% 31% 1%;
-margin-left: 5%;
-width: 40%;
-height: 80%;
+.imagem_roupa {
+  display: flex;
+  border-radius: 10px;
+  margin: 1%;
+  width: 300px;
+  height: 300px;
 }
 
 @font-face {
-  font-family: 'Roboto Condensed', sans-serif;
+  font-family: 'Roboto Condensed';
   src: url('https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap');
-  font-weight: 400; /* Use 300 para Light, 400 para Regular, 700 para Bold, etc. */
-  font-style: normal;
+  font-weight: 400;
 }
 
 .tópico_roupa {
-  font-family: 'Roboto Condensed', sans-serif;
+  font-family: 'Roboto Condensed';
   font-weight: 400;
-  font-style: normal;
-  margin-top: - 40%;
-  font-size: 4vh;
+  font-style: normal; /* ou italic, conforme necessário */
+  margin-top: -10px; /* ou outro valor razoável */
+  font-size: 2em; /* ou outra unidade relativa */
 }
+
 .text-body-secondary.py-5 {
   background-color: #000000;
   width: 100%;
   height: 10vh;
-  margin-top: 20%
+  margin-top: 20%;
 }
 .mb-1 {
-color: white;
+  color: white;
 }
 
 .front-image-identifier {
-position: absolute;
-margin-left: 55%;
-margin-top: -70%;
-font-size: 6vh;
+  position: absolute;
+  margin-left: 55%;
+  margin-top: -70%;
+  font-size: 6vh;
 }
 
 .tópico {
-font-weight:bold
+  font-weight: bold;
 }
+
 .topic-container {
-margin-left: 55%;
-margin-top: -60%
-}
-.logo {
-width: auto;
-height: 8vh;
+  margin-left: 5%;
+  margin-top: 20%;
 }
 
 .navbar {
-width: width 100%;
-height: 10vh;
+  width: 100%;
+  height: 10vh;
 }
 
 .form-control.me-2 {
-width: 12vw;
-height: 5vh;
-font-size: 2vh;
+  width: 12vw;
+  height: 5vh;
+  font-size: 2vh;
 }
 
 .btn.btn-outline-success {
-width: 8vw;
-height: 5vh;
-font-size: 2vh;
+  width: 8vw;
+  height: 5vh;
+  font-size: 2vh;
 }
 
 .navbar-toggler {
@@ -90,13 +75,12 @@ font-size: 2vh;
   align-items: center;
   background-color: transparent;
   border: none;
-  margin-top: -7vh
+  margin-top: -7vh;
 }
 
-
 .navbar-toggler-icon {
-width: 5vh;
-height: 5vh;
+  width: 5vh;
+  height: 5vh;
 }
 
 .header {
@@ -104,3 +88,4 @@ height: 5vh;
   align-items: center;
   justify-content: space-between;
 }
+
