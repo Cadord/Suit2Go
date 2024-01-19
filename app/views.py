@@ -5,12 +5,15 @@ from django.shortcuts import render, redirect
 from allauth.socialaccount.models import SocialAccount
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
+from django.contrib import messages
 from time import sleep
 from datetime import datetime, time, timedelta, date
 from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
 import googleapiclient.discovery
+import tkinter as tk
+from tkintermapview import TkinterMapView
 import os
 
 #event = {
@@ -101,6 +104,14 @@ def aluguel(request, idroupa):
 }
             # Insira o evento na sua agenda
             service.events().insert(calendarId='primary', body=evento).execute()
+            messages.success(request,"Aluguel efetuado com sucesso!")
+    win = tk.Tk()
+    win_map = TkinterMapView(tk, width=800, height=800)
+    win_map.pack(fill='both', expand= True)
+    win_map.set_tile_server("http://mt0.google.com/vt/lyrs=m&x={x}&y={y}&z={z}", max_zoom=22)
+    win_map.set_address(f'{endereco}', marker=True)
+    while True:
+        win.mainloop()
 
 
     return render(request, 'alugar.html',{'form':form,'roupa':Roupas.objects.get(id_roupas=idroupa)})
