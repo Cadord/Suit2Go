@@ -14,8 +14,13 @@ from google.auth.transport.requests import Request
 import googleapiclient.discovery
 import tkinter as tk
 from tkintermapview import TkinterMapView
+import environ
+import folium
+import requests
 import os
 
+env = environ.Env()
+environ.Env.read_env()
 #event = {
  #       'summary': f'{procedure.capitalize()}',
   #      'start': {
@@ -105,16 +110,13 @@ def aluguel(request, idroupa):
             # Insira o evento na sua agenda
             service.events().insert(calendarId='primary', body=evento).execute()
             messages.success(request,"Aluguel efetuado com sucesso!")
-    win = tk.Tk()
-    win_map = TkinterMapView(tk, width=800, height=800)
-    win_map.pack(fill='both', expand= True)
-    win_map.set_tile_server("http://mt0.google.com/vt/lyrs=m&x={x}&y={y}&z={z}", max_zoom=22)
-    win_map.set_address(f'{endereco}', marker=True)
-    while True:
-        win.mainloop()
+            url = f'https://api.opencagedata.com/geocode/v1/json?q={endereco}&key={api_key}'
+            response = requests.get(url)
+            data = response.json
+            coords = [data[0]['geometry']['lat'], data[0]['geometry']['lng']]
+            my_map = folium.Map(coords,zoom_start=12)
 
-
-    return render(request, 'alugar.html',{'form':form,'roupa':Roupas.objects.get(id_roupas=idroupa)})
+    return render(request, 'alugar.html',{'form':form,'roupa':Roupas.objects.get(id_roupas=idroupa)}, {'map': my_map})
 def home(request):
     try:
         social_account = SocialAccount.objects.get(user=request.user, provider='google')
