@@ -1,7 +1,7 @@
 from .models import Roupas
 from .forms import RoupasForms, DateForm
 from django.db.models import Q
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, HttpResponse
 from allauth.socialaccount.models import SocialAccount
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
@@ -13,11 +13,10 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
 import googleapiclient.discovery
 import tkinter as tk
-from tkintermapview import TkinterMapView
 import environ
-import folium
 import requests
 import os
+from django.conf import settings
 
 env = environ.Env()
 environ.Env.read_env()
@@ -34,24 +33,6 @@ environ.Env.read_env()
 
             #}
     #service.events().insert(calendarId='primary', body=event).execute()
-SCOPES = ['https://www.googleapis.com/auth/calendar.events']
-creds = None
-
-if os.path.exists('token.json'):
-    creds = Credentials.from_authorized_user_file('token.json')
-if not creds or not creds.valid:
-    if creds and creds.expired and creds.refresh_token:
-        creds.refresh(Request())
-    else:
-        flow = InstalledAppFlow.from_client_secrets_file(
-            'client_secret_860607395602-kldpfn6g61u968u3gop43jiu8b24bsfq.apps.googleusercontent.com.json', SCOPES 
-            )
-        creds = flow.run_local_server(port=0)
-    with open('token.json', 'w') as token:
-        token.write(creds.to_json())
-service = googleapiclient.discovery.build('calendar', 'v3', credentials=creds)
-
-
 # Create your views here.
 def index(request):
     query = request.GET.get('q', '')
@@ -108,15 +89,11 @@ def aluguel(request, idroupa):
     },
 }
             # Insira o evento na sua agenda
+            service = googleapiclient.discovery.build('calendar', 'v3', credentials=creds)
             service.events().insert(calendarId='primary', body=evento).execute()
             messages.success(request,"Aluguel efetuado com sucesso!")
-            url = f'https://api.opencagedata.com/geocode/v1/json?q={endereco}&key={api_key}'
-            response = requests.get(url)
-            data = response.json
-            coords = [data[0]['geometry']['lat'], data[0]['geometry']['lng']]
-            my_map = folium.Map(coords,zoom_start=12)
 
-    return render(request, 'alugar.html',{'form':form,'roupa':Roupas.objects.get(id_roupas=idroupa)}, {'map': my_map})
+    return render(request, 'alugar.html',{'form':form,'roupa':Roupas.objects.get(id_roupas=idroupa)})
 def home(request):
     try:
         social_account = SocialAccount.objects.get(user=request.user, provider='google')
@@ -132,4 +109,29 @@ def user_profile(request):
 def logout_view(request):
     logout(request)
     return redirect("/")
+
+def google_auth(request):
+    flow = InstalledAppFlow.from_client_secrets_file(
+        settings.CLIENT_SECRET_FILE,
+        settings.SCOPES,
+        redirect_uri='https://127.0.0.1:8000/oauth-callback/'
+    )
+    auth_url, _ = flow.authorization_url(prompt='consent')
+    return redirect(auth_url)
+
+
+def oauth_callback(request):
+    flow = InstalledAppFlow.from_client_secrets_file(
+        settings.CLIENT_SECRET_FILE,
+        settings.SCOPES,
+        redirect_uri='https://127.0.0.1:8000/oauth-callback/'  # Substitua pela sua URL de redirecionamento
+    )
+    flow.fetch_token(authorization_response=request.build_absolute_uri())
+    credentials = flow.credentials
+    service = googleapiclient.discovery.build('calendar', 'v3', credentials=credentials)
     
+
+    with open(settings.TOKEN_PATH, 'w') as token:
+        token.write(credentials.to_json())
+
+    return redirect('/')
