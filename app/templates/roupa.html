@@ -3,15 +3,58 @@
 {% block title %}Suit2Go - Roupa{% endblock %}
 
 {% block content %}
-<img img src="{{roupa.foto.url}}" class="imagem_roupa" alt="{{ roupa.nome }}">
-<p class="front-image-identifier">{{roupa.nome}}</p>
-<div class="topic-container">
-        <p class="tópico_roupa">Categoria: <strong>{{roupa.categoria}}</strong></p>
-        <p class="tópico_roupa">Tamanho: <strong>{{roupa.tamanho}}</strong></p>
-        <p class="tópico_roupa">Cor: <strong>{{roupa.cor}}</strong></p>
-        <p class="tópico_roupa">Estilo: <strong>{{roupa.estilo}}</strong></p>
-        <p class="tópico_roupa">Preço aluguel: <strong> R$ {{roupa.preco_aluguel}}</strong></p>
-        <p class="tópico_roupa">Peças disponíveis: <strong>{{roupa.disponibilidade}}</strong></p>
-</div>
-<a href="{% url 'aluguel' idroupa=roupa.id_roupas %}" class="btn btn-primary stretched-link">Ver</a>
+<!-- Product section-->
+<section class="py-5">
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="row gx-4 gx-lg-5 align-items-center">
+            <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" src="{{roupa.foto.url}}" alt="{{ roupa.nome }}" /></div>
+            <div class="col-md-6">
+                <div class="small mb-1">SKU: BST-498</div>
+                <h1 class="display-5 fw-bolder">{{roupa.nome}}</h1>
+                <div class="fs-5 mb-5">
+                    <!-- <span class="text-decoration-line-through">$ {{roupa.preco_aluguel}}</span> -->
+                    <span>R$ {{roupa.preco_aluguel}}</span>
+                </div>
+                <p class="lead">
+                    <p class="topico_roupa">Categoria: <strong>{{roupa.categoria}}</strong></p>
+                    <p class="topico_roupa">Tamanho: <strong>{{roupa.tamanho}}</strong></p>
+                    <p class="topico_roupa">Cor: <strong>{{roupa.cor}}</strong></p>
+                    <p class="topico_roupa">Estilo: <strong>{{roupa.estilo}}</strong></p>
+                    <p class="topico_roupa">Peças disponíveis: <strong>{{roupa.disponibilidade}}</strong></p>
+                </p>
+                <div class="d-flex">
+                    <input class="form-control text-center me-3" id="quantity" type="num" value="1" style="max-width: 3rem" />
+                    <button class="btn btn-outline-dark flex-shrink-0" type="button" onclick="handleAddToCart('{{roupa.id_roupas}}', '{{roupa.nome}}')">
+                        <i class="bi-cart-fill me-1"></i>
+                        Adicionar ao carrinho
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% if roupas_relacionadas %}
+<!-- Related items section-->
+<section class="py-5 bg-light">
+    <div class="container px-4 px-lg-5 mt-5">
+        <h2 class="fw-bolder mb-4">Produtos Relacionados</h2>
+        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+            {% for roupa in roupas %}
+            {% include 'componentes/roupa_card.html' with roupa=roupa %}
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<script type="text/javascript">
+    function handleAddToCart(roupaId, name) {
+        const qtdField = document.getElementById("quantity")
+
+        addToCart(roupaId, name, parseInt(qtdField.value));
+        qtdField.value = 1;
+        alert("Produto adicionado");
+    }
+</script>
 {% endblock %}

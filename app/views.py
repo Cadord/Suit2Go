@@ -12,6 +12,7 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
 import googleapiclient.discovery
 import os
+from .utils import connect_to_calendar
 
 #event = {
  #       'summary': f'{procedure.capitalize()}',
@@ -26,22 +27,22 @@ import os
 
             #}
     #service.events().insert(calendarId='primary', body=event).execute()
-SCOPES = ['https://www.googleapis.com/auth/calendar.events']
-creds = None
+# SCOPES = ['https://www.googleapis.com/auth/calendar.events']
+# creds = None
 
-if os.path.exists('token.json'):
-    creds = Credentials.from_authorized_user_file('token.json')
-if not creds or not creds.valid:
-    if creds and creds.expired and creds.refresh_token:
-        creds.refresh(Request())
-    else:
-        flow = InstalledAppFlow.from_client_secrets_file(
-            'client_secret_860607395602-kldpfn6g61u968u3gop43jiu8b24bsfq.apps.googleusercontent.com.json', SCOPES 
-            )
-        creds = flow.run_local_server(port=0)
-    with open('token.json', 'w') as token:
-        token.write(creds.to_json())
-service = googleapiclient.discovery.build('calendar', 'v3', credentials=creds)
+# if os.path.exists('token.json'):
+#     creds = Credentials.from_authorized_user_file('token.json')
+# if not creds or not creds.valid:
+#     if creds and creds.expired and creds.refresh_token:
+#         creds.refresh(Request())
+#     else:
+#         flow = InstalledAppFlow.from_client_secrets_file(
+#             'client_secret_860607395602-kldpfn6g61u968u3gop43jiu8b24bsfq.apps.googleusercontent.com.json', SCOPES 
+#             )
+#         creds = flow.run_local_server(port=0)
+#     with open('token.json', 'w') as token:
+#         token.write(creds.to_json())
+# service = googleapiclient.discovery.build('calendar', 'v3', credentials=creds)
 
 
 # Create your views here.
@@ -78,6 +79,7 @@ def roupa_dinamico(request,idroupa):
     return render(request,'roupa.html',context)
     
 def aluguel(request, idroupa):
+    # service=connect_to_calendar(request=self.request)
     form = DateForm()
     if request.method == 'POST':
         formulario = DateForm(request.POST)
@@ -100,10 +102,11 @@ def aluguel(request, idroupa):
     },
 }
             # Insira o evento na sua agenda
-            service.events().insert(calendarId='primary', body=evento).execute()
+            # service.events().insert(calendarId='primary', body=evento).execute()
 
 
     return render(request, 'alugar.html',{'form':form,'roupa':Roupas.objects.get(id_roupas=idroupa)})
+
 def home(request):
     try:
         social_account = SocialAccount.objects.get(user=request.user, provider='google')
@@ -115,6 +118,9 @@ def home(request):
 
 def user_profile(request):
     return render(request, 'user_profile.html')
+
+def meu_carrinho(request):
+    return render(request, 'meu_carrinho.html')
 
 def logout_view(request):
     logout(request)

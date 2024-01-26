@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block title %}Suit2Go - Roupa{% endblock %}
+
+{% block content %}
+<script>
+  // Add event listener for the DOMContentLoaded event
+  document.addEventListener('DOMContentLoaded', onDocumentLoad);
+  function onDocumentLoad(ev) {
+    const cart = getCart();
+    const table = document.getElementById('tableCartItems');
+
+    for (const itemIdx in cart.items) {
+      const item = cart.items[itemIdx];
+      const tr = document.createElement('tr');
+      tr.id =  'cartItem'+item.productId;
+
+      const nameCol = document.createElement('td');
+      nameCol.innerHTML = item.name;
+      tr.append(nameCol);
+
+      const quantityCol = document.createElement('td');
+      quantityCol.innerHTML = item.quantity;
+      tr.append(quantityCol);
+
+      const buttonCol = document.createElement('td');
+      const delButton = document.createElement('button');
+      delButton.addEventListener('click', () => handleRemoveFromCart(item.productId))
+      delButton.onclick = `handleRemoveFromCart(${item.productId}, tr)`;
+      delButton.innerHTML = "X";
+      buttonCol.appendChild(delButton);
+      
+      tr.append(buttonCol);
+      table.append(tr);
+    }
+  }
+
+  function handleRemoveFromCart(productId) {
+    removeFromCart(productId);
+    const table = document.getElementById('tableCartItems');
+    document.getElementById('cartItem'+productId).remove();
+    alert('Produto removido');
+  }
+</script>
+
+<div>
+  <table id="tableCartItems">
+    <tr>
+      <td>Produto</td>
+      <td>Quantidade</td>
+      <td></td>
+    </tr>
+  </table>
+</div>
+{% endblock %}

@@ -1,66 +1,62 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<section class="py-5 text-center container">
-    <div class="row py-lg-5">
-        <div class="col-lg-6 col-md-8 mx-auto">
-            <h1 class="fw-light">Suit2Go</h1>
-            <p class="lead text-body-secondary">Uma nova experiência para sua viagem</p>
-
-            <!-- Move the search box here -->
-            <form class="d-flex mt-3" role="search" action="{% url 'home' %}" method="get">
-                <input class="form-control me-2" type="search" name="q" placeholder="Pesquisar" aria-label="Pesquisar">
-                <button class="btn btn-outline-success" type="submit">Pesquisar</button>
-            </form>
-            <div class="row mt-4">
-                <div class="col-4">
-                    <a href="#" class="category-icon">
-                        <i class="bi bi-airplane-engines"></i>
-                        <p class="mt-2 mb-0">Roupas Masculinas</p>
-                    </a>
-                </div>
-                <div class="col-4">
-                    <a href="#" class="category-icon">
-                        <i class="bi bi-airplane-engines"></i>
-                        <p class="mt-2 mb-0">Roupas Femininas</p>
-                    </a>
-                </div>
-                <div class="col-4">
-                    <a href="#" class="category-icon">
-                        <i class="bi bi-airplane-engines"></i>
-                        <p class="mt-2 mb-0">Viagens</p>
-                    </a>
-                </div>
-                <!-- Add more columns with icons and names as needed -->
+<!-- Header -->
+<header class="bg-dark py-5">
+    <div class="container px-4 px-lg-5 my-2">
+        <div class="text-center text-white">
+            <h1 class="display-4 fw-bolder">Suit2Go</h1>
+            <p class="lead fw-normal text-white-50 mb-0">Uma nova experiência para sua viagem</p>
+        </div>
+        <div class="row">
+            <div class="col-lg-6 col-md-8 mx-auto">
+                <form class="d-flex mt-3" role="search" action="{% url 'home' %}" method="get">
+                    <div class="input-group mb-3">
+                        <input class="form-control" type="search" name="q" placeholder="Pesquisar"
+                            aria-label="Pesquisar">
+                        <button class="btn btn-outline-primary" type="submit"><i class="bi bi-search"></i></button>
+                    </div>
+                </form>
             </div>
+        </div>
+        <div class="row">
+            <div class="col-4">
+                <a href="#" class="category-icon">
+                    <button class="btn btn-outline-primary">
+                        <i class="bi bi-airplane-engines"></i> Roupas Masculinas
+                    </button>
+                </a>
+            </div>
+            <div class="col-4">
+                <a href="#" class="category-icon">
+                    <i class="bi bi-airplane-engines"></i>
+                    <p class="mt-2 mb-0">Roupas Femininas</p>
+                </a>
+            </div>
+            <div class="col-4">
+                <a href="#" class="category-icon">
+                    <i class="bi bi-airplane-engines"></i>
+                    <p class="mt-2 mb-0">Viagens</p>
+                </a>
+            </div>
+        </div>
+</header>
+<!-- Section-->
+<section class="py-5">
+    <div class="container px-4 px-lg-5 mt-5">
+        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+            {% if roupas %}
+            {% for roupa in roupas %}
+            {% include 'componentes/roupa_card.html' with roupa=roupa %}
+            {% endfor %}
+            {% else %}
+            <div class="row">
+                <div class="col-12 text-center">
+                    <h1>Nenhuma roupa encontrada...</h1>
+                </div>
+            </div>
+            {% endif %}
         </div>
     </div>
 </section>
-<div class="py-5 bg-body-tertiary">
-    <div class="container">
-        {% if roupas %}
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-            {% for roupa in roupas %}
-            <div class="col">
-                <div class="card shadow-sm">
-                    <img src="{{roupa.foto.url}}" class="card-img-top" alt="{{ roupa.nome }}" width="400" height="300" />
-                    <div class="card-body">
-                        <p class="card-text">{{ roupa.nome }}</p>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <a href="{% url 'roupa' idroupa=roupa.id_roupas %}" class="btn btn-primary stretched-link">Ver</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            {% endfor %}
-        </div>
-        {% else %}
-        <div class="row">
-            <div class="col-12 text-center">
-                <h1>Nenhuma roupa encontrada...</h1>
-            </div>
-        </div>
-        {% endif %}
-    </div>
-</div>
 {% endblock %}

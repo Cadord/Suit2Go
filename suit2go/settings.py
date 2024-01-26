@@ -131,6 +131,7 @@ SOCIALACCOUNT_PROVIDERS = {
         "SCOPE": [
             "profile",
             "email",
+            'https://www.googleapis.com/auth/calendar'
         ],
         "AUTH_PARAMS": {
             "access_type": "online",

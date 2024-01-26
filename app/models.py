@@ -38,7 +38,7 @@ class Roupas(models.Model):
     id_roupas = models.AutoField(primary_key=True)
     nome = models.CharField(max_length=200, blank=True, null=True)
     categoria = models.CharField(max_length=200, blank=True, null=True)
-    tamanho = models.IntegerField(blank=True, null=True)
+    tamanho = models.CharField(max_length=200, blank=True, null=True)
     cor = models.CharField(max_length=200, blank=True, null=True)
     estilo = models.CharField(max_length=200, blank=True, null=True)
     preco_aluguel = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
@@ -48,3 +48,13 @@ class Roupas(models.Model):
     class Meta:
         managed = True
         db_table = 'roupas'
+
+class FotosRoupas(models.Model):
+    id = models.AutoField(primary_key=True)
+    roupa_id = models.IntegerField(blank=True, null=True)
+    fotoUrl = models.ImageField(upload_to='%Y/%m/%d/')
+    ordem = models.IntegerField(default=1)
+
+    class Meta:
+        managed = True
+        db_table = 'fotosRoupa'

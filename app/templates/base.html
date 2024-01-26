@@ -13,38 +13,78 @@
 </head>
 
 <body>
-    <header>
-        <div class="navbar navbar-dark bg-dark navbar-expand-lg">
-            <div class="container-fluid">
-                <a href="{% url 'home' %}" class="navbar-brand d-flex align-items-center">
-                <img class="logo" src="https://lh3.googleusercontent.com/fife/AGXqzDmLfpvDNDRDsp4GMPGfOMSCdfy72IA0yNV0_FXkhrOU1Oo9qTMI7pp7kiHl965d_TGW_gajwgR6lbU_5aXB-8FlUFiydt26IeyFPdgpIuB_K_0O8Gzb9_fZWbEXmmMCR0EckQKJBFJlv2OU2X4XpzVq0y-8l9TJhJKOr7zGJrlfuf8-9Ujp3FSNrSF4ZC_blyN1xKyhMt8-JiTWtzWIoYrX3UaJHIq7R5JtnZgZ4gCPVwBeMqEYuIRlKhyBFV_md4LrYfrbu4V-aBqVWcB44Ves_UwPtE5v813iBuDchvkM-sfbT17n1Ee1gOdLCZYLSn6aPqlbHpD2fvL43rNyBp0m-L5BMgdZP9Zi8cxmHkoc6D1fUMNloCFPqQWMEbDiUlvQz_PF3I_yMeR8ufkQmwO_8pDzjXtqd6p8KrCBerVIcpO_8yMTP6xFalIHIrVaXZN_ULinjClxzx9T-IKye5FJBpccG9l_flA5Lnx2m-QAZ2YbQ0QlwoBloZcPzmu_3kY8uEF02CoukjkstwYkevutYEnEyhBcUorO4QJrIq23t1-x1NqbwEJuDzZZ2FV8VqkYlD8ORMpx3P-A7dgMygBNs-rVZ2b7Fbg0-Fi7Wy0PKu8H92BpPLNrEl1gPYFtn7lhVIXEpyJLC8Phm0NcaXm9jnNfn7FP7d2tDvsnSiFFvgGQs9Br1xlqEDd17ZzDVNtyxFTcGRLMtJc20s68QtYh9Or93Opvri2tydZCChu06l_i-XUoTVsUkwY7e9InwRfh36ysGDK2aMS6dw0Qr7OgCq8nJ0gyzkEx5mu4JuTbi6O_NFS5rtpXWJeRqzKNvs8RAkCiaKPPMkvTXSNsEJ0Fy8qYOolUwNKlJj0-Kc8SAOjGQt7CKcPPL20XiVvXgPIHSKy1cGd70V-xkLLoMbU_pivR6GodvwwsO8J90_c2Zx6NQVX_SNAtwSqcEUQ26sKyIXXvyMNyKOuYb6xfnVq-5zXSxs6HbLOC-JvocfcidS5ckuyU5MIV_Q8698ZGFC-GDp_dmABehtZzR9hNDPhkbpRpa0wXoXvMCCENK5Oui9auO4EdQP5ijf8Gut5UZWOqFlJn2mgVC0aZmt5_8l4m0mSuhTEXkovi-RkzgGvAS9fFDle27MF9Hzg3dbS37hutpPByko5Wc5vJGGK_8ClREYiPTtkSRZOk76KMbbYK9K40oswV4s0VJWX9BmN3NLTJ3Di6moE0d9cotfCqLrVgaMCvudtjq94_zktwPTw7KQIX_WEwBKbOkE5tfoKbQWekjQdvX5bEvwN2wxQ4SB4Zi2IyozcUHebZf0-ZAP0rtnBKLT1lF-570Vy7bN6PeIbRNm5_ccADRk-3DkHA0Ms63Y8I0Gl6tc2X9eUEj_uhlR-pe4nF1V65Dx3v_vx_WnimXhDoUa991qB-AL2H-oKTDTvDS6VdjpGehmfH5moWXxopW6jE3OvYyiLbGCETkVyhhg0XmKb_rx9BT2L-sZNImpVUG61US6VVQ606Pvewyu61acDlAe4h7IP6BdceTo9hCx5W2-fZHMuqIexki9ZGyJE=w1558-h797" width="100px" height="100px">
-                </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav">
-                        <li class="nav-item">
-                            {% if user.is_authenticated %}
-                                <div class="dropdown">
-                                    <button class="btn nav-link dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Bem vindo, {{ user.username }}
-                                    </button>
-                                    <ul class="dropdown-menu" aria-labelledby="userDropdown">
-                                        <li><a class="dropdown-item" href="{% url 'user_profile' %}">Profile</a></li>
-                                        <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
-                                    </ul>
-                                </div>
-                            {% else %}
-                                <a href="{% url 'google_login' %}" class="nav-link google-button">Logar com Google</a>
-                            {% endif %}
-                        </li>
-                    </ul>
+    <!-- Navigation-->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container px-4 px-lg-5">
+            <a class="navbar-brand" href="{% url 'home' %}">
+                <img class="logo" src="{% static 'img/logo.png' %}">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                    <li class="nav-item"><a class="nav-link active" aria-current="page" href="{% url 'home' %}">Home</a>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="#!">Sobre</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">Loja</a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="#!">Todos os Produtos</a></li>
+                            <li>
+                                <hr class="dropdown-divider" />
+                            </li>
+                            <li><a class="dropdown-item" href="#!">Popular</a></li>
+                            <li><a class="dropdown-item" href="#!">Novos</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <div class="d-flex justify-content-between" style="gap:20px">
+                    <form action="/meu_carrinho" method="GET">
+                        <button class="btn btn-outline-light" type="submit">
+                            <i class="bi-cart-fill me-1"></i>
+                            Carrinho
+                            <span class="badge bg-dark text-white ms-1 rounded-pill" id="header-cart-qtd">0</span>
+                        </button>
+                    </form>
+                    <div>
+                        {% if user.is_authenticated %}
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+                            aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse">
+                            <ul class="navbar-nav">
+                                <li class="nav-item">
+                                    <div class="dropdown">
+                                        <button class="btn nav-link dropdown-toggle" type="button" id="userDropdown"
+                                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            Bem vindo, {{ user.username }}
+                                        </button>
+                                        <ul class="dropdown-menu" aria-labelledby="userDropdown">
+                                            <li><a class="dropdown-item" href="{% url 'user_profile' %}">Profile</a>
+                                            </li>
+                                            <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        {% else %}
+                        <a href="{% url 'google_login' %}" class="nav-link google-button">
+                            <button class="btn btn-outline-light" type="submit">
+                                Logar com Google
+                            </button>
+                        </a>
+                        {% endif %}
+                    </div>
                 </div>
             </div>
         </div>
-    </header>
+    </nav>
+
 
     <main>
         {% block content %}
@@ -52,14 +92,22 @@
         {% endblock %}
     </main>
 
-    <footer class="text-body-secondary py-5">
+
+    <!-- Footer-->
+    <footer class="py-5 bg-dark">
         <div class="container">
-            <p class="mb-1">&copy; SUIT2GO </p>
+            <p class="m-0 text-center text-white">&copy; Suit2Go 2024</p>
         </div>
     </footer>
 
     <!-- Bootstrap JS and other scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
+        integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
+        integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13"
+        crossorigin="anonymous"></script>
+
+    <script src="{% static 'js/cart.js' %}"></script>
 
 </body>
