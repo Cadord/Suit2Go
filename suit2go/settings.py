@@ -16,7 +16,6 @@ import environ
 # Initialise environment variables
 env = environ.Env()
 environ.Env.read_env()
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -45,7 +44,8 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-    'allauth.socialaccount.providers.google'
+    'allauth.socialaccount.providers.google',
+    'django_extensions'
 ]
 
 MIDDLEWARE = [
@@ -169,6 +169,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CLIENT_SECRET_FILE = 'client_secret_860607395602-kldpfn6g61u968u3gop43jiu8b24bsfq.apps.googleusercontent.com.json'
 SCOPES = ['https://www.googleapis.com/auth/calendar.events']
 TOKEN_PATH = 'token.json'
+
 SECURE_SSL_REDIRECT = True
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True

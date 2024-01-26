@@ -1,5 +1,13 @@
 from .models import Roupas
+from google.oauth2 import service_account
 from .forms import RoupasForms, DateForm
+from django.contrib import messages
+from django.shortcuts import redirect
+from google.auth.exceptions import RefreshError
+from googleapiclient.discovery import build
+from google.auth.transport.requests import Request
+from google_auth_oauthlib.flow import InstalledAppFlow
+import os
 from django.db.models import Q
 from django.shortcuts import render, redirect, HttpResponse
 from allauth.socialaccount.models import SocialAccount
@@ -8,16 +16,15 @@ from django.contrib.auth import logout
 from django.contrib import messages
 from time import sleep
 from datetime import datetime, time, timedelta, date
-from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
-from google.auth.transport.requests import Request
 import googleapiclient.discovery
+import google.auth.exceptions
 import tkinter as tk
 import environ
 import requests
+from google.auth.exceptions import RefreshError
 import os
 from django.conf import settings
-
 env = environ.Env()
 environ.Env.read_env()
 #event = {
@@ -89,9 +96,15 @@ def aluguel(request, idroupa):
     },
 }
             # Insira o evento na sua agenda
-            service = googleapiclient.discovery.build('calendar', 'v3', credentials=creds)
-            service.events().insert(calendarId='primary', body=evento).execute()
-            messages.success(request,"Aluguel efetuado com sucesso!")
+            try:
+                credentials = request.session.get('oauth_credentials')
+                service = googleapiclient.discovery.build('calendar', 'v3', credentials=credentials)
+                service.events().insert(calendarId='primary', body=evento).execute()
+                messages.success(request,"Aluguel efetuado com sucesso!")
+            except google.auth.exceptions.RefreshError:
+                # Lide com a exceção, talvez pedindo ao usuário para autenticar novamente.
+                pass
+
 
     return render(request, 'alugar.html',{'form':form,'roupa':Roupas.objects.get(id_roupas=idroupa)})
 def home(request):
@@ -124,14 +137,21 @@ def oauth_callback(request):
     flow = InstalledAppFlow.from_client_secrets_file(
         settings.CLIENT_SECRET_FILE,
         settings.SCOPES,
-        redirect_uri='https://127.0.0.1:8000/oauth-callback/'  # Substitua pela sua URL de redirecionamento
+        redirect_uri='https://127.0.0.1:8000/oauth-callback/'
     )
     flow.fetch_token(authorization_response=request.build_absolute_uri())
+
     credentials = flow.credentials
-    service = googleapiclient.discovery.build('calendar', 'v3', credentials=credentials)
-    
 
-    with open(settings.TOKEN_PATH, 'w') as token:
-        token.write(credentials.to_json())
+    # Armazene as credenciais na sessão
+    request.session['oauth_credentials'] = {
+        'token': credentials.token,
+        'refresh_token': credentials.refresh_token,
+        'expires_at': credentials.expiry,
+        'token_uri': credentials.token_uri,
+        'client_id': credentials.client_id,
+        'client_secret': credentials.client_secret
+    }
 
+    # Redirecione para onde você deseja após a autenticação
     return redirect('/')
