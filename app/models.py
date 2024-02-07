@@ -7,7 +7,8 @@
 # Feel free to rename the models, but don't rename db_table values or field names.
 from django.db import models
 from datetime import datetime
-
+from django.contrib import admin
+from allauth.socialaccount.models import SocialApp
 
 class Clientes(models.Model):
     id_clientes = models.AutoField(primary_key=True)
@@ -58,3 +59,7 @@ class FotosRoupas(models.Model):
     class Meta:
         managed = True
         db_table = 'fotosRoupa'
+
+class SocialAppAdmin(admin.ModelAdmin):
+    list_display = ('provider', 'name', 'client_id', 'secret', 'sites')
+    search_fields = ('provider',)

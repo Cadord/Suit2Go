@@ -13,6 +13,15 @@ from google.auth.transport.requests import Request
 import googleapiclient.discovery
 import os
 from .utils import connect_to_calendar
+from django.shortcuts import get_object_or_404
+from django.dispatch import receiver
+from allauth.socialaccount.signals import social_account_added, social_account_updated
+from django.core.exceptions import MultipleObjectsReturned
+from django.contrib import messages
+import logging
+from allauth.socialaccount.models import SocialToken
+from google.oauth2 import id_token
+from social_django.utils import psa
 
 #event = {
  #       'summary': f'{procedure.capitalize()}',
@@ -46,16 +55,67 @@ from .utils import connect_to_calendar
 
 
 # Create your views here.
+
+# def index(request):
+#     query = request.GET.get('q', '')
+#     ultimas_roupas_query = Roupas.objects
+#     ultimas_roupas = {}
+#     if query:
+#         ultimas_roupas_query = ultimas_roupas_query.filter(Q(nome__icontains=query))
+#         ultimas_roupas = ultimas_roupas_query.all()
+#     context = {
+#     "roupas": ultimas_roupas
+# }
+#     return render(request, "index.html", context)
+def obter_token_google(request):
+    # Obter o token de acesso do usuário logado
+    social_token = SocialToken.objects.get(account__user=request.user, account__provider='google')
+
+    # Verificar se o token ainda é válido (opcional)
+    if not social_token.expires_at or social_token.expires_at > timezone.now():
+        # Obter o ID Token do Google
+        id_token_info = id_token.verify_oauth2_token(
+            social_token.token,
+            Request(),
+            social_token.app.client_id
+        )
+
+        # O token de acesso pode ser extraído assim
+        access_token = social_token.token
+
+        # Você também pode extrair informações adicionais do ID Token, se necessário
+        user_id = id_token_info.get('sub')
+
+        return access_token
+
+
+
 def index(request):
     query = request.GET.get('q', '')
+    roupas = Roupas.objects.all()
+    roupas_enumeradas = list(enumerate(roupas))
     ultimas_roupas_query = Roupas.objects
     if (query):
         ultimas_roupas_query = ultimas_roupas_query.filter(Q(nome__icontains=query))
     ultimas_roupas = ultimas_roupas_query.order_by('nome').all
     context = {
-        "roupas": ultimas_roupas
+        "roupas": ultimas_roupas,
+        'roupas_enumeradas':roupas_enumeradas
     }
-    return render(request, "index.html", context)
+    return render(request, "index.html",context)
+
+@receiver(social_account_added)
+@receiver(social_account_updated)
+def handle_google_login(sender, request, sociallogin, **kwargs):
+    if sociallogin.account.provider == 'google':
+        # O código aqui será executado quando um usuário fizer login usando o provedor Google.
+        # Você pode usar as credenciais do OAuth obtidas do Google para interagir com o Google Calendar API.
+        social_token = sociallogin.account.socialtoken_set.first()
+        google_access_token = social_token.token
+        google_refresh_token = social_token.token_secret
+
+
+
 
 
 def cadastro_roupa(request):
@@ -78,43 +138,77 @@ def roupa_dinamico(request,idroupa):
     context = {'roupa':Roupas.objects.get(id_roupas=idroupa)}
     return render(request,'roupa.html',context)
     
+from django.shortcuts import render, redirect
+from allauth.socialaccount.models import SocialAccount
+from datetime import datetime, timedelta
+from .forms import DateForm  # Certifique-se de importar seu formulário
+
+from django.shortcuts import render, redirect
+from allauth.socialaccount.models import SocialAccount
+from datetime import datetime, timedelta
+from .forms import DateForm  # Certifique-se de importar seu formulário
+
+logger = logging.getLogger(__name__)
+
 def aluguel(request, idroupa):
-    # service=connect_to_calendar(request=self.request)
     form = DateForm()
+
     if request.method == 'POST':
         formulario = DateForm(request.POST)
+
         if formulario.is_valid():
-            data_1 = formulario.cleaned_data['date_1']
-            hora_1 = formulario.cleaned_data['time_1']
-            endereco = formulario.cleaned_data['endereco']
+            if request.user.is_authenticated:
+                try:
+                    # Obtendo o token de acesso do SocialAccount
+                    social_account = SocialAccount.objects.get(user=request.user, provider='google')
+                    access_token = social_account.socialtoken_set.get(account=social_account).token
 
-            # Combina data e hora para criar um objeto datetime
-            data_tempo = datetime.combine(data_1, hora_1)
-            evento = {
-    'summary': endereco,
-    'start': {
-        'dateTime': (data_tempo - timedelta(hours=3)).isoformat(),
-        'timeZone': 'America/Sao_Paulo',
-    },
-    'end': {
-        'dateTime': (data_tempo + timedelta(hours=1)).isoformat(),
-        'timeZone': 'America/Sao_Paulo',
-    },
-}
-            # Insira o evento na sua agenda
-            # service.events().insert(calendarId='primary', body=evento).execute()
+                    # Utilizando o token de acesso para construir as credenciais
+                    credentials = Credentials.from_authorized_user_info(
+                        {'access_token': access_token},
+                        scopes=['https://www.googleapis.com/auth/calendar'],
+                    )
 
+                    # Construindo o serviço da API do Google Calendar
+                    service = build('calendar', 'v3', credentials=credentials)
 
-    return render(request, 'alugar.html',{'form':form,'roupa':Roupas.objects.get(id_roupas=idroupa)})
+                    data_1 = formulario.cleaned_data['date_1']
+                    hora_1 = formulario.cleaned_data['time_1']
+                    endereco = formulario.cleaned_data['endereco']
+
+                    data_tempo = datetime.combine(data_1, hora_1)
+                    evento = {
+                        'summary': endereco,
+                        'start': {
+                            'dateTime': (data_tempo - timedelta(hours=3)).isoformat(),
+                            'timeZone': 'America/Sao_Paulo',
+                        },
+                        'end': {
+                            'dateTime': (data_tempo + timedelta(hours=1)).isoformat(),
+                            'timeZone': 'America/Sao_Paulo',
+                        },
+                    }
+
+                    # Restante do seu código para criar o evento no Google Calendar...
+                    service.events().insert(calendarId='primary', body=evento).execute()
+                    messages.success(request, 'Evento no Google Calendar criado com sucesso!')
+                except SocialAccount.DoesNotExist:
+                    messages.error(request, "Erro ao criar evento")
+
+    return render(request, 'alugar.html', {'form': form, 'roupa': Roupas.objects.get(id_roupas=idroupa)})
 
 def home(request):
-    try:
-        social_account = SocialAccount.objects.get(user=request.user, provider='google')
-        user_name = social_account.extra_data.get('name', '')
-    except SocialAccount.DoesNotExist:
+    social_accounts = SocialAccount.objects.filter(user=request.user)
+    
+    if social_accounts.exists():
+        # Assumindo que você está interessado apenas na conta do Google
+        google_account = social_accounts.filter(provider='google').first()
+        access_token = social_account.socialtoken_set.get(account=social_account).token
+        user_name = google_account.extra_data.get('name', '').capitalize()
+    else:
         user_name = ''
-
-    return render(request, 'home.html', {'user_name': user_name})
+    
+    return render(request, 'home.html', {'user_name': f"{user_name.capitalize()}"})
 
 def user_profile(request):
     return render(request, 'user_profile.html')
@@ -125,4 +219,10 @@ def meu_carrinho(request):
 def logout_view(request):
     logout(request)
     return redirect("/")
-    
+
+def authorize_google(request):
+    return redirect('social:begin', 'google-oauth2')
+
+def google_callback(request):
+    # Lida com o retorno do Google após a autorização
+    return redirect('/')
