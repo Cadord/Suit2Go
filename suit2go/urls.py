@@ -22,9 +22,10 @@ from django.urls import path
 from allauth.account.views import LoginView
 
 urlpatterns = [
-    path('', include('app.urls')),
     path('admin/', admin.site.urls),
     path('accounts/', include("allauth.urls")),
+    path('', include ('app.urls')),
+    path('social/', include('social_django.urls', namespace='social')),
 ]
 
 if settings.DEBUG:

@@ -1,46 +1,96 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block content %}
 <!-- Header -->
 {% load static %}
-<header class="bg-dark py-5">
+<header class="header_index">
+    
     <div class="container px-4 px-lg-5 my-2">
-        <div class="text-center text-white">
-            <h1 class="display-4 fw-bolder">Suit2Go</h1>
-            <p class="lead fw-normal text-white-50 mb-0">Uma nova experiência para sua viagem</p>
-        </div>
         <div class="row">
             <div class="col-lg-6 col-md-8 mx-auto">
                 <form class="d-flex mt-3" role="search" action="{% url 'home' %}" method="get">
                     <div class="input-group mb-3">
                         <input class="form-control" type="search" name="q" placeholder="Pesquisar"
                             aria-label="Pesquisar">
-                        <button class="btn btn-outline-primary" type="submit"><i class="bi bi-search"></i></button>
+                        <button class="btn btn-index" type="submit"><i class="bi bi-search"></i></button>
                     </div>
                 </form>
             </div>
         </div>
         <div class="row">
-            <div class="generic-icons">
-                <a href="#" class="specific-icon">
-                    <button class="btn btn-outline-primary">
-                        <i class="fi fi-rs-tshirt"></i> Roupas Masculinas
-                    </button>
-                </a>
+            <div class="col-4">
+                <div class="icon-container">
+                    <a href="#" class="category-icon">
+                        <button class="icon">
+                            <img src="{% static 'img/man.png' %}" width='20' alt='Roupas Masculinas'>
+                            <p class='icon-describer'>Roupas Masculinas</p>
+                        </button>
+                    </a>
+                </div>
             </div>
             <div class="col-4">
-                <a href="#" class="category-icon">
-                    <i class="bi bi-airplane-engines"></i>
-                    <p class="mt-2 mb-0">Roupas Femininas</p>
-                </a>
+                <div class="icon-container">
+                    <a href="#" class="category-icon">
+                        <button class="icon">
+                            <img src="{% static 'img/woman.png' %}" width='23' alt='Roupas Femininas'>
+                            <p class='icon-describer'>Roupas Femininas</p>
+                        </button>
+                    </a>
+                </div>
             </div>
             <div class="col-4">
-                <a href="#" class="category-icon">
-                    <i class="bi bi-airplane-engines"></i>
-                    <p class="mt-2 mb-0">Ternos</p>
-                </a>
+                <div class="icon-container">
+                    <a href="#" class="category-icon">
+                        <button class="icon">
+                            <img src="{% static 'img/terno.png' %}" width='40' alt='Ternos Completos'>
+                            <p class='icon-describer'>Ternos Completos</p>
+                        </button>
+                    </a>
+                </div>
             </div>
-        </div>   
+            <div class="col-4">
+                <div class="icon-container">
+                    <a href="#" class="category-icon">
+                        <button class="icon">
+                            <img src="{% static 'img/shoe.png' %}" width='60' alt='Calçados'>
+                            <p id='calçado' class='icon-describer'>Calçados</p>
+                        </button>
+                    </a>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="icon-container">
+                    <a href="#" class="category-icon">
+                        <button class="icon">
+                            <img src="{% static 'img/heart.png' %}" width='50' alt='Favoritos'>
+                            <p class='icon-describer'>Favoritos</p>
+                        </button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+        <div class='d-flex align-items-center justify-content-center vh-100'>
+            <div id="carouselExample" class="carousel slide">
+                <div class="carousel-inner">
+                    {% for index, roupa in roupas_enumeradas %}
+                        <div class="carousel-item {% if index == 0 %}active{% endif %}">
+                            <img src="{{ roupa.foto.url }}" width="500" height="500" class="d-block w-100" alt="...">
+                        </div>
+                    {% endfor %}
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+        </div>
+    </div>
 </header>
 <!-- Section-->
 <section class="py-5">

@@ -57,7 +57,7 @@
 }
 
 .logo {
-  max-width: 100px;
+  max-width: 60px;
   height: auto;
 }
 
@@ -100,65 +100,123 @@ font-size: 2vh;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  background-color: lightgray;
 }
 
-.specific-icon {
-  width: 5vh;
-  height: 5vh;
-  margin-left: 2%;
+.container.px-4.px-lg-5 {
+  background-color: lightgray;
+}
+
+.header_index{
+  background-color: white;
+}
+
+.container.px-4.px-lg-5.my-2 {
+  background-color: white;
+}
+
+.navbar.navbar-expand-lg.nav-base {
+  background-color: lightgray;
+}
+
+.text-center {
+  color: lightgray;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@700&display=swap');
+
+.nav-link.active {
+  font-family: 'Sora', sans-serif;
+  margin-left: 60vh;
+}
+
+.nav-link {
+  font-family: 'Sora', sans-serif;
+  color: black;
+}
+
+.btn.btn-outline-light {
+  font-family: 'Sora', sans-serif;
+  color: black;
+}
+
+.btn.btn-outline {
+  font-family: 'Sora', sans-serif;
+  color: black;
+  border: 1px solid black;
+  
+}
+
+.btn.btn-outline:hover {
+  font-family: 'Sora', sans-serif;
+  background-color: black;
   color: white;
+  border: 1px solid white;
 }
 
-.cart {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
+.carousel.slide {
+  margin-bottom: 25%;
+  width: 30%;
+  height: auto;
 }
 
-.cart th, .cart td {
-  border: 1px solid #ddd;
-  padding: 10px;
-  text-align: left;
-  text-decoration: solid;
+.col.mb-5 {
+  margin-top: 3vh;
 }
 
-.cart th {
-  background-color: #f2f2f2;
+.container.px-4.px-lg-5.mt-5 {
+  border-radius: 10px;
 }
 
-.cart button {
-  background-color: #f44336;
-  color: white;
+.card-img-top.roupa-thumbnail {
+  border-radius: 5%;
+}
+
+.card.h-100 {
+  border-radius: 5%;
+}
+
+.form-control {
+  background-color: lightgray;
+  border-radius: 100px;
+}
+
+.btn.btn-index {
+  outline-color: none;
+  background-color: lightgray;
+  border-radius: 100px;
+}
+
+.bi.bi-search {
+  color: black;
+  border: 1px solid lightgrey;
+  border-radius: 100px;
+}
+
+.icon-container {
+  margin-bottom: 10px; /* Ajuste o valor conforme necessário */
+  padding: 50px;
+}
+
+.col-4 {
+  width: 40px;
+  height: auto;
+  margin: 80px;
+  margin-top: 0%;
+  margin-bottom: 0%;
+  background-color: white;
+}
+
+.icon {
   border: none;
-  padding: 2px 10px; /* Adjusted padding for consistent button size */
-  cursor: pointer;
-  border-radius: 4px;
-  margin-right: 5px;
+  background-color: white;
 }
 
-.cart button:hover {
-  background-color: #d32f2f;
+.icon-describer {
+  text-align: center;
+  margin: 30px
 }
 
-.cart button:active {
-  background-color: #b71c1c;
+#calçado {
+  margin-top: 50px;
 }
-
-/* Add margin to the buttons */
-.cart button + button {
-  margin-left: 5px;
-}
-
-div {
-  margin-top: 20px;
-}
-
-h2 {
-  color: #333;
-}
-
-tr:not(:first-child) {
-  margin-top: 10px;
-}
-
-
