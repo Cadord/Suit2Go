@@ -85,7 +85,7 @@ class Roupas(models.Model):
 
 class FotosRoupas(models.Model):
     id = models.AutoField(primary_key=True)
-    roupa_id = models.IntegerField(blank=True, null=True)
+    roupa = models.ForeignKey(Roupas, on_delete=models.CASCADE)
     fotoUrl = models.ImageField(upload_to=generate_file_name)
     ordem = models.IntegerField(default=0)
 
