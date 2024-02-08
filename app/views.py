@@ -10,6 +10,7 @@ from datetime import datetime, time, timedelta, date
 from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
+import ast
 import googleapiclient.discovery
 import os
 from .utils import connect_to_calendar
@@ -120,7 +121,8 @@ def user_profile(request):
     return render(request, 'user_profile.html')
 
 def meu_carrinho(request):
-    return render(request, 'meu_carrinho.html')
+    carrinho = request.COOKIES.get('suit2goCart', '{\'items\':[]}')
+    return render(request, 'meu_carrinho.html', { 'carrinho': ast.literal_eval(carrinho) })
 
 def logout_view(request):
     logout(request)

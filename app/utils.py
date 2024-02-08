@@ -2,6 +2,8 @@ from allauth.socialaccount.models import SocialAccount,SocialToken
 from google.oauth2.credentials import Credentials
 from django.contrib.auth.models import User
 from googleapiclient.discovery import build
+import uuid
+import os
 
 def connect_to_calendar(request):
     #Fetches the User of the request
@@ -54,3 +56,9 @@ def prepare_event(data):
         }
     }
     return event
+
+def generate_file_name(instance, filename):
+    _, ext = os.path.splitext(filename)
+    uuid = uuid.uuid4()
+    filename = f"{uuid}.{ext}"
+    return os.path.join("media", filename)

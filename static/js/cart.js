@@ -14,7 +14,7 @@ function addToCart(productId, productName, quantity) {
   else {
     cart.items.push({ productId: productId, name: productName, quantity: quantity });
   }
-  localStorage.setItem(CART_KEY, JSON.stringify(cart));
+  saveCart(cart);
   updateCartCount()
 }
 
@@ -24,8 +24,27 @@ function addToCart(productId, productName, quantity) {
 function removeFromCart(productId) {
   const cart = getCart();
   cart.items = cart.items.filter(p => p.productId !== productId);
-  localStorage.setItem(CART_KEY, JSON.stringify(cart));
+  saveCart(cart);
   updateCartCount()
+}
+
+/**
+ * @param {string} productId
+ * @param {number} quantity
+ */
+function updateCartProductQuantity(productId, quantity) {
+  const cart = getCart();
+  const product = cart.items.find(p => p.productId === productId)
+  if (product) {
+    product.quantity += quantity;
+    if (product.quantity <= 0) {
+      removeFromCart(productId);
+    }
+    saveCart(cart);
+    updateCartCount();
+    return product.quantity;
+  }
+  return 0;
 }
 
 /**
@@ -33,11 +52,18 @@ function removeFromCart(productId) {
  */
 function getCart() {
   try {
-    const cart = JSON.parse(localStorage.getItem(CART_KEY));
-    return cart || { items: [] }
+    const cart = JSON.parse(getCookie(CART_KEY))||{items:[]};
+    return cart;
   } catch {
     return { items: [] };
   }
+}
+
+/**
+ * @param {Cart} cart
+ */
+function saveCart(cart) {
+  setCookie(CART_KEY, JSON.stringify(cart), 7);
 }
 
 function updateCartCount() {
@@ -48,7 +74,7 @@ function updateCartCount() {
   document.getElementById("header-cart-qtd").innerHTML = qtd
 }
 
-updateCartCount()
+updateCartCount();
 /**
  * @typedef Cart
  * @prop {CartItem[]} items
@@ -58,7 +84,9 @@ updateCartCount()
  * @typedef CartItem
  * @prop {{ number }} productId
  * @prop {{ string }} name
+ * @prop {{ number }} quantity
  */
 
 
 var produtos = ["123", "456"]
+

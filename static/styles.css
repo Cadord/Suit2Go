@@ -102,3 +102,63 @@ font-size: 2vh;
   justify-content: space-between;
 }
 
+.specific-icon {
+  width: 5vh;
+  height: 5vh;
+  margin-left: 2%;
+  color: white;
+}
+
+.cart {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.cart th, .cart td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
+  text-decoration: solid;
+}
+
+.cart th {
+  background-color: #f2f2f2;
+}
+
+.cart button {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  padding: 2px 10px; /* Adjusted padding for consistent button size */
+  cursor: pointer;
+  border-radius: 4px;
+  margin-right: 5px;
+}
+
+.cart button:hover {
+  background-color: #d32f2f;
+}
+
+.cart button:active {
+  background-color: #b71c1c;
+}
+
+/* Add margin to the buttons */
+.cart button + button {
+  margin-left: 5px;
+}
+
+div {
+  margin-top: 20px;
+}
+
+h2 {
+  color: #333;
+}
+
+tr:not(:first-child) {
+  margin-top: 10px;
+}
+
+

@@ -1,55 +1,64 @@
 {% extends 'base.html' %}
 
-{% block title %}Suit2Go - Roupa{% endblock %}
+{% block title %}Suit2Go - Carrinho{% endblock %}
 
 {% block content %}
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
 <script>
-  // Add event listener for the DOMContentLoaded event
-  document.addEventListener('DOMContentLoaded', onDocumentLoad);
-  function onDocumentLoad(ev) {
+  const debouncedRefresh = debounce(() => location.relod(), 300);
+
+  function handleUpdateQuantity(productId, amount) {
     const cart = getCart();
-    const table = document.getElementById('tableCartItems');
-
-    for (const itemIdx in cart.items) {
-      const item = cart.items[itemIdx];
-      const tr = document.createElement('tr');
-      tr.id =  'cartItem'+item.productId;
-
-      const nameCol = document.createElement('td');
-      nameCol.innerHTML = item.name;
-      tr.append(nameCol);
-
-      const quantityCol = document.createElement('td');
-      quantityCol.innerHTML = item.quantity;
-      tr.append(quantityCol);
-
-      const buttonCol = document.createElement('td');
-      const delButton = document.createElement('button');
-      delButton.addEventListener('click', () => handleRemoveFromCart(item.productId))
-      delButton.onclick = `handleRemoveFromCart(${item.productId}, tr)`;
-      delButton.innerHTML = "X";
-      buttonCol.appendChild(delButton);
-      
-      tr.append(buttonCol);
-      table.append(tr);
-    }
+    const updatedQuantity = updateCartProductQuantity(productId, amount);
+    document.getElementById('itemQtd-'+productId).innerHTML = updatedQuantity;
   }
 
   function handleRemoveFromCart(productId) {
     removeFromCart(productId);
-    const table = document.getElementById('tableCartItems');
-    document.getElementById('cartItem'+productId).remove();
-    alert('Produto removido');
+    alert('Produto removido do carrinho');
+    document.getElementById('cartItem-'+productId).remove();
+  }
+
+  function handleCheckout() {
+    alert('Finalizar compra clicked');
+  }
+
+  function handleContinueShopping() {
+    alert('Continuar compras clicked');
   }
 </script>
 
 <div>
-  <table id="tableCartItems">
+  <h2>Itens no Carrinho</h2>
+  {% if carrinho %}
+  <table class='cart' id="tableCartItems">
     <tr>
-      <td>Produto</td>
-      <td>Quantidade</td>
-      <td></td>
+      <th>Produto</th>
+      <th>Quantidade</th>
+      <th></th>
     </tr>
+    {% for item in carrinho.items %}
+      <tr id="cartItem-{{item.productId}}">
+        <td>{{item.name}}</td>
+        <td>
+          <span id="itemQtd-{{item.productId}}">{{item.quantity}}</span>
+          <button onclick="handleUpdateQuantity('{{item.productId}}', -1)">-</button>
+          <button onclick="handleUpdateQuantity('{{item.productId}}', 1)">+</button>
+        </td>
+        <td>
+          <button onclick="handleRemoveFromCart('{{item.productId}}')">X</button>
+        </td>
+      </tr>
+    {% endfor %}
+  
+    {% if carrinho.items|length == 0 %}
+      <tr>
+        <td colspan="3">Nenhum item no carrinho</td>
+      </tr>
+    {% endif %}
   </table>
+  {% endif %}
 </div>
 {% endblock %}
