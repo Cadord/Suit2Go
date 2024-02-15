@@ -1,4 +1,6 @@
 .bg-image {
+  max-width: 1000px; /* Defina o valor adequado de acordo com o design da sua página */
+  margin: 0 auto; /* Centraliza o conteúdo horizontalmente */
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center center;
@@ -8,8 +10,9 @@
   display: flex;
   border-radius: 10px;
   margin: 1%;
-  width: 300px;
-  height: 300px;
+  width: 500px;
+  height: 500px;
+  margin-left: 10%;
 }
 
 @font-face {
@@ -28,18 +31,11 @@
 .text-body-secondary.py-5 {
   background-color: #000000;
   width: 100%;
-  height: 10vh;
+  height: 10%;
   margin-top: 20%;
 }
 .mb-1 {
   color: white;
-}
-
-.front-image-identifier {
-  position: absolute;
-  margin-left: 55%;
-  margin-top: -70%;
-  font-size: 6vh;
 }
 
 .tópico {
@@ -58,7 +54,8 @@
 
 .logo {
   max-width: 60px;
-  height: auto;
+  height: 60px;
+  max-width: 60px;
 }
 
 .roupa-thumbnail {
@@ -219,4 +216,119 @@ font-size: 2vh;
 
 #calçado {
   margin-top: 50px;
+}
+
+#base-footer {
+  margin-top: 5%;
+}
+
+.footer-container {
+  margin-bottom: 5%;
+}
+
+.nunito {
+  font-family: "Nunito", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 100px;
+  font-style: normal;
+  
+}
+
+#nome-roupa {
+  font-family: "Nunito", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 200;
+  max-width: fit-content;
+}
+
+#preco-aluguel {
+  font-family: "Nunito", sans-serif;
+  font-optical-sizing: auto;
+  font-size: 200%;
+  max-width: fit-content;
+}
+
+#card-logo {
+  width: 50px;
+  height: 50px;
+  margin-bottom: 1%;
+  max-width: fit-content;
+}
+
+.roupa-container {
+  margin-bottom: 15%;
+  max-width: fit-content;
+  margin-left: 3%;
+  margin-bottom: 40%;
+}
+
+#add-to-cart {
+  background-color: rgb(98, 211, 113);
+  border-radius: 100px;
+  width: 380px;
+  font-family: "Nunito", sans-serif;
+  font-optical-sizing: auto;
+  font-size: 100%;
+
+}
+
+.linha {
+  display: flex;
+  align-items: center;
+  border: none; /* Remover a borda padrão */
+  border-top: 2px solid black; /* Estilizar a linha */
+  width: 35%; /* Definir a largura da linha */
+  margin-left: 5%;
+}
+
+.desc-logo {
+  width: 60px;
+  height: 60px;
+  margin-left: 2%;
+  margin-top: 0%;
+  max-width: fit-content;
+}
+
+.desc {
+  font-family: "Nunito", sans-serif;
+  font-size: 20px;
+  margin-left: 3%;
+}
+
+.desc-container {
+  display: flex;
+  align-items: center;
+  margin: 3%;
+}
+
+.fw-bolder {
+  color: black;
+}
+
+.text-center {
+  color: black;
+}
+
+/* Garante que todos os cards tenham a mesma altura */
+.card {
+  height: 100%;
+}
+
+/* Define um tamanho fixo para as imagens dentro dos cards */
+.card-img-top {
+  height: 200px; /* Defina a altura desejada */
+  object-fit: cover; /* Garante que a imagem preencha completamente o espaço, cortando se necessário */
+}
+
+
+.row-roupa {
+  margin-inline-start: 8%;
+  display: inline-flex;
+  max-width: fit-content;
+}
+
+#roupa1 {
+  margin-left: 8%;
+  display: flex;
+  max-width: fit-content;
 }

@@ -49,7 +49,6 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.google',
     'django.contrib.sites',
     'django_extensions',
-    #'users',
     'django_migrate_or_rollback'
 ]
 

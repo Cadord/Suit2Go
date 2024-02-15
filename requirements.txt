@@ -34,7 +34,6 @@ et-xmlfile==1.1.0
 exceptiongroup==1.1.0
 Flask==2.2.2
 flatbuffers==23.5.26
-folium==0.15.1
 frozenlist==1.4.1
 future==0.18.3
 geocoder==1.38.1
