@@ -21,6 +21,8 @@ class Clientes(models.Model):
     class Meta:
         managed = True
         db_table = 'clientes'
+    def __str__(self):
+        return self.nome
 
 
 class Cor(models.Model):
@@ -31,6 +33,8 @@ class Cor(models.Model):
     class Meta:
         managed = True
         db_table = 'cor'
+    def __str__(self):
+        return self.titulo
 
 class Estilo(models.Model):
     id = models.AutoField(primary_key=True)
@@ -39,6 +43,8 @@ class Estilo(models.Model):
     class Meta:
         managed = True
         db_table = 'estilo'
+    def __str__(self):
+        return self.titulo
 
 class Categoria(models.Model):
     id = models.AutoField(primary_key=True)
@@ -47,6 +53,8 @@ class Categoria(models.Model):
     class Meta:
         managed = True
         db_table = 'categoria'
+    def __str__(self):
+        return self.titulo
 
 class Tamanho(models.Model):
     id = models.AutoField(primary_key=True)
@@ -55,6 +63,8 @@ class Tamanho(models.Model):
     class Meta:
         managed = True
         db_table = 'tamanho'
+    def __str__(self):
+        return self.titulo
 
 class Marcas(models.Model):
     id_marca = models.AutoField(primary_key=True)
@@ -62,16 +72,14 @@ class Marcas(models.Model):
     class Meta:
         managed = True
         db_table = 'marcas'
+    def __str__(self):
+        return self.nome
 
 class Roupas(models.Model):
     id_roupas = models.AutoField(primary_key=True)
     nome = models.CharField(max_length=200, blank=True, null=True)
     categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE)
-    tamanho = models.ForeignKey(Tamanho, on_delete=models.CASCADE)
-    cor = models.ForeignKey(Cor, on_delete=models.CASCADE)
     estilo = models.ForeignKey(Estilo, on_delete=models.CASCADE)
-    preco_aluguel = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
-    disponibilidade = models.IntegerField(blank=True, null=True)
 
     def __str__(self):
         return self.nome
@@ -81,7 +89,7 @@ class Roupas(models.Model):
         db_table = 'roupas'
 
 class FotosRoupas(models.Model):
-    id = models.IntegerField(primary_key=True)
+    id = models.AutoField(primary_key=True)
     roupa = models.ForeignKey(Roupas, on_delete=models.CASCADE)
     fotoUrl = models.ImageField(upload_to=generate_file_name)
     ordem = models.IntegerField(default=0)
@@ -98,10 +106,8 @@ class SocialAppAdmin(admin.ModelAdmin):
 class ProdutoVariacao(models.Model):
     id = models.AutoField(primary_key=True)
     produto = models.ForeignKey(Roupas, on_delete=models.CASCADE)
-    categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE)
     tamanho = models.ForeignKey(Tamanho, on_delete=models.CASCADE)
     cor = models.ForeignKey(Cor, on_delete=models.CASCADE)
-    estilo = models.ForeignKey(Estilo, on_delete=models.CASCADE)
     preco_aluguel = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
     disponibilidade = models.IntegerField(blank=True, null=True)
 

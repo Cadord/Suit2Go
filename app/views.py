@@ -1,28 +1,27 @@
-from .models import Roupas
+from .models import Roupas, ProdutoVariacao
 from .forms import RoupasForms, DateForm
+from .utils import connect_to_calendar
+from datetime import datetime, time, timedelta, date
 from django.db.models import Q
-from django.shortcuts import render, redirect
-from allauth.socialaccount.models import SocialAccount
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
-from time import sleep
-from datetime import datetime, time, timedelta, date
+from django.core.exceptions import MultipleObjectsReturned
+from django.dispatch import receiver
+from django.shortcuts import render, redirect, get_object_or_404
+from google.oauth2 import id_token
 from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
-import ast
-import googleapiclient.discovery
-import os
-from .utils import connect_to_calendar
-from django.shortcuts import get_object_or_404
-from django.dispatch import receiver
+from time import sleep
 from allauth.socialaccount.signals import social_account_added, social_account_updated
-from django.core.exceptions import MultipleObjectsReturned
-from django.contrib import messages
-import logging
-from allauth.socialaccount.models import SocialToken
-from google.oauth2 import id_token
+from allauth.socialaccount.models import SocialToken, SocialAccount
 from social_django.utils import psa
+import ast
+import logging
+import json
+
+logger = logging.getLogger(__name__)
 
 #event = {
  #       'summary': f'{procedure.capitalize()}',
@@ -56,18 +55,6 @@ from social_django.utils import psa
 
 
 # Create your views here.
-
-# def index(request):
-#     query = request.GET.get('q', '')
-#     ultimas_roupas_query = Roupas.objects
-#     ultimas_roupas = {}
-#     if query:
-#         ultimas_roupas_query = ultimas_roupas_query.filter(Q(nome__icontains=query))
-#         ultimas_roupas = ultimas_roupas_query.all()
-#     context = {
-#     "roupas": ultimas_roupas
-# }
-#     return render(request, "index.html", context)
 def obter_token_google(request):
     # Obter o token de acesso do usuário logado
     social_token = SocialToken.objects.get(account__user=request.user, account__provider='google')
@@ -94,11 +81,13 @@ def obter_token_google(request):
 def index(request):
     query = request.GET.get('q', '')
     roupas = Roupas.objects.all()
+    roupa = Roupas.objects.get(id_roupas=2)
     roupas_enumeradas = list(enumerate(roupas))
     ultimas_roupas_query = Roupas.objects
     if (query):
         ultimas_roupas_query = ultimas_roupas_query.filter(Q(nome__icontains=query))
     ultimas_roupas = ultimas_roupas_query.order_by('nome').all
+
     context = {
         "roupas": ultimas_roupas,
         'roupas_enumeradas':roupas_enumeradas
@@ -136,20 +125,10 @@ def cadastro_roupa(request):
     return render(request, template_name='cadastro_roupa.html', context=context)
 
 def roupa_dinamico(request,idroupa):
-    context = {'roupa':Roupas.objects.get(id_roupas=idroupa)}
-    return render(request,'roupa.html',context)
-    
-from django.shortcuts import render, redirect
-from allauth.socialaccount.models import SocialAccount
-from datetime import datetime, timedelta
-from .forms import DateForm  # Certifique-se de importar seu formulário
-
-from django.shortcuts import render, redirect
-from allauth.socialaccount.models import SocialAccount
-from datetime import datetime, timedelta
-from .forms import DateForm  # Certifique-se de importar seu formulário
-
-logger = logging.getLogger(__name__)
+    roupa = Roupas.objects.get(id_roupas=idroupa)
+    variacoes = ProdutoVariacao.objects.select_related('cor').select_related('tamanho').filter(produto=idroupa).all()
+    context = { 'roupa': roupa, 'variacoes': variacoes }
+    return render(request,'roupa.html', context)
 
 def aluguel(request, idroupa):
     form = DateForm()

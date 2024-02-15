@@ -15,10 +15,10 @@ class FotosRoupaVariacaoAdmin(admin.StackedInline):
 
 @admin.register(Roupas)
 class RoupasAdmin(admin.ModelAdmin):
-    list_display=("id_roupas", "nome", "categoria","estilo","preco_aluguel","disponibilidade")
+    list_display=("id_roupas", "nome", "categoria","estilo")
     inlines = [FotosRoupasAdmin]
 
 @admin.register(ProdutoVariacao)
 class ProdutoVariacaoAdmin(admin.ModelAdmin):
-    list_display=('id', 'produto', 'preco_aluguel', 'categoria', 'cor', 'tamanho', 'estilo')
+    list_display=('id', 'produto', 'preco_aluguel', 'cor', 'tamanho')
     inlines = [FotosRoupaVariacaoAdmin]

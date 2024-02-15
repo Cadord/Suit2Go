@@ -67,7 +67,15 @@
                 <div class="fs-5 mb-5">
                     <!-- <span class="text-decoration-line-through">$ {{roupa.preco_aluguel}}</span> -->
                     <img id='card-logo' src="{% static 'img/creditcard.png' %}">
-                    <span id='preco-aluguel'>R$ {{roupa.preco_aluguel}}</span>
+                    <!-- ESSE CAMPO está na variação agora: <span id='preco-aluguel'>R$ {{roupa.preco_aluguel}}</span> -->
+                    <div>
+                        {% for variacao in variacoes%}
+                        <div>cor: {{variacao.cor.titulo}} / tamanho: {{variacao.tamanho.titulo }} / preço: {{variacao.preco_aluguel}}</div>
+                            {% for variacaoFoto in variacao.fotosroupavariacao_set.all%}
+                            <img src="/media/{{variacaoFoto.fotoUrl}}"></img>
+                            {% endfor%}
+                        {% endfor %}
+                    </div>
                     <div class='botão-aluguel'>
                         <button id='add-to-cart' class="btn btn-outline-dark flex-shrink-0" type="button" onclick="handleAddToCart('{{roupa.id_roupas}}', '{{roupa.nome}}')">
                             Alugar

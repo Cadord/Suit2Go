@@ -59,6 +59,6 @@ def prepare_event(data):
 
 def generate_file_name(instance, filename):
     _, ext = os.path.splitext(filename)
-    uuid = uuid.uuid4()
-    filename = f"{uuid}.{ext}"
-    return os.path.join("media", filename)
+    novo_id = uuid.uuid4()
+    filename = f"{novo_id}{ext}"
+    return filename

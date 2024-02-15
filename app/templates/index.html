@@ -76,7 +76,7 @@
                 <div class="carousel-inner">
                     {% for index, roupa in roupas_enumeradas %}
                         <div class="carousel-item {% if index == 0 %}active{% endif %}">
-                            <img src="{{ roupa.foto.url }}" width="500" height="500" class="d-block w-100" alt="...">
+                            <img src="/media/{{ roupa.fotosroupas_set.all.0.fotoUrl }}" width="500" height="500" class="d-block w-100" alt="...">
                         </div>
                     {% endfor %}
                 </div>
