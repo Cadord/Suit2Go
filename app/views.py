@@ -218,6 +218,10 @@ def meu_carrinho(request):
     carrinho = request.COOKIES.get('suit2goCart', '{\'items\':[]}')
     return render(request, 'meu_carrinho.html', { 'carrinho': ast.literal_eval(carrinho) })
 
+def checkout(request):
+    carrinho = request.COOKIES.get('suit2goCart', '{\'items\':[]}')
+    return render(request, 'checkout.html', { 'carrinho': ast.literal_eval(carrinho) })
+
 def logout_view(request):
     logout(request)
     return redirect("/")

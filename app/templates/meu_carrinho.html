@@ -22,7 +22,6 @@
   }
 
   function handleCheckout() {
-    alert('Finalizar compra clicked');
   }
 
   function handleContinueShopping() {
@@ -34,11 +33,14 @@
   <h2>Itens no Carrinho</h2>
   {% if carrinho %}
   <table class='cart' id="tableCartItems">
-    <tr>
-      <th>Produto</th>
-      <th>Quantidade</th>
-      <th></th>
-    </tr>
+    <thead>
+      <tr>
+        <th>Produto</th>
+        <th>Quantidade</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
     {% for item in carrinho.items %}
       <tr id="cartItem-{{item.productId}}">
         <td>{{item.name}}</td>
@@ -58,6 +60,10 @@
         <td colspan="3">Nenhum item no carrinho</td>
       </tr>
     {% endif %}
+    </tbody>
+    <tfoot>
+      <a href="{% url 'checkout' %}" >Checkout</a>
+    </tfoot>
   </table>
   {% endif %}
 </div>

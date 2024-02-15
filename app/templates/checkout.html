@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block title %}Suit2Go - Carrinho{% endblock %}
+
+{% block content %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
+<div>
+  <h1>Pode ter um título aqui também se quiser</h1>
+  <div id="passo1">
+    <h2>Primeira etapa</h2>
+    bla bla
+    <div>
+      <button onclick="controlState('passo2')">Próximo</button>
+    </div>
+  </div>
+  <div id="passo2">
+    <h2>Segunda etapa</h2>
+    bla bla
+    <div>
+      <button onclick="controlState('passo1')">Anterior</button>
+      <button onclick="controlState('passo3')">Próximo</button>
+    </div>
+  </div>
+  <div id="passo3">
+    <h2>Etapa final</h2>
+    bla bla
+    <div>
+      <button onclick="controlState('passo2')">Anterior</button>
+      <button onclick="finishCheckout()">Finalizar</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // pode adicionar passos extras ou remover se necessário
+  var states = ["passo1", "passo2", "passo3"];
+
+  // Esta função controla a visibilidade das etapas
+  function controlState(currentState) {
+    const el = document.getElementById(currentState);
+    el.style.display = "block";
+    for (let state of states) {
+      document.getElementById(state).style.display = 'none';
+    }
+    document.getElementById(currentState).style.display = 'block';
+  }
+
+  function finishCheckout() {
+    alert("POST to backend or convert button to form submit");
+  }
+
+  controlState(states[0]);
+</script>
+{% endblock %}

@@ -2,7 +2,7 @@
 
 <html lang="pt-br">
 
-<head class=>
+<head>
     <meta charset="UTF-8">
     <title>{% block title %}SUIT2GO{% endblock %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="{% static 'styles.css' %}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <script src="{% static 'js/utils.js' %}"></script>
+</head>
 <body>
     <!-- Navigation-->
     {% load socialaccount %}
@@ -43,14 +44,15 @@
                         </ul>
                     </li>
                 </ul>
-                <div class="d-flex justify-content-between" style="gap:20px">
-                    <form action="/meu_carrinho" method="GET">
-                        <button class="btn btn-outline" type="submit">
-                            <i class="bi-cart-fill me-1"></i>
-                            Carrinho
-                            <span class="badge bg-dark text-white ms-1 rounded-pill" id="header-cart-qtd">0</span>
-                        </button>
-                    </form>
+                <div class="d-flex justify-content-between align-items-center" style="gap:20px">
+                    <div>
+                        <a href="{% url 'meu_carrinho' %}">
+                            <button class="btn position-relative" style="border-radius:100%;" type="submit">
+                                <i class="bi-cart-fill me-1"></i>
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="header-cart-qtd">0</span>
+                            </button>
+                        </form>
+                    </div>
                     <div>
                         {% if user.is_authenticated %}
                         <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -62,8 +64,9 @@
                             <ul class="navbar-nav">
                                 <li class="nav-item">
                                     <div class="dropdown">
-                                        <button class="btn nav-link dropdown-toggle" type="button" id="userDropdown"
-                                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <button class="btn dropdown-toggle btn-light" style="border-radius:25px;"
+                                            type="button" id="userDropdown" data-bs-toggle="dropdown"
+                                            aria-haspopup="true" aria-expanded="false">
                                             Bem vindo, {{ user.username }}
                                         </button>
                                         <ul class="dropdown-menu" aria-labelledby="userDropdown">
@@ -76,8 +79,28 @@
                             </ul>
                         </div>
                         {% else %}
-                        <a href="/social/google-oauth2/" class="nav-link google-button">Login com Google</a>
-                            </a>
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+                            aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse">
+                            <ul class="navbar-nav">
+                                <li class="nav-item">
+                                    <div class="dropdown">
+                                        <button class="btn dropdown-toggle btn-light" style="border-radius:25px;"
+                                            type="button" id="userDropdown" data-bs-toggle="dropdown"
+                                            aria-haspopup="true" aria-expanded="false">
+                                            <i class="bi bi-person-circle"></i>
+                                        </button>
+                                        <ul class="dropdown-menu" aria-labelledby="userDropdown">
+                                            <li><a class="dropdown-item" href="/social/google-oauth2/">Entrar com
+                                                    google</a></li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
                         {% endif %}
                     </div>
                 </div>
