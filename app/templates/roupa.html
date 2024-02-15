@@ -1,63 +1,93 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block title %}Suit2Go - Roupa{% endblock %}
 
 {% block content %}
 <!-- Product section-->
-<section class="py-5">
-    <div class="container px-4 px-lg-5 my-5">
-        <div class="row gx-4 gx-lg-5 align-items-center">
-            <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" src="{{roupa.foto.url}}" alt="{{ roupa.nome }}" /></div>
-            <div class="col-md-6">
-                <div class="small mb-1">SKU: BST-498</div>
-                <h1 class="display-5 fw-bolder">{{roupa.nome}}</h1>
-                <div class="fs-5 mb-5">
-                    <!-- <span class="text-decoration-line-through">$ {{roupa.preco_aluguel}}</span> -->
-                    <span>R$ {{roupa.preco_aluguel}}</span>
-                </div>
-                <p class="lead">
-                    <p class="topico_roupa">Categoria: <strong>{{roupa.categoria}}</strong></p>
-                    <p class="topico_roupa">Tamanho: <strong>{{roupa.tamanho}}</strong></p>
-                    <p class="topico_roupa">Cor: <strong>{{roupa.cor}}</strong></p>
-                    <p class="topico_roupa">Estilo: <strong>{{roupa.estilo}}</strong></p>
-                    <p class="topico_roupa">Peças disponíveis: <strong>{{roupa.disponibilidade}}</strong></p>
-                </p>
-                <div class="d-flex">
-                    <input class="form-control text-center me-3" id="quantity" type="num" value="1" style="max-width: 3rem" />
-                    <button class="btn btn-outline-dark flex-shrink-0" type="button" onclick="handleAddToCart('{{roupa.id_roupas}}', '{{roupa.nome}}')">
-                        <i class="bi-cart-fill me-1"></i>
-                        Adicionar ao carrinho
+<header>
+    <div class="row-roupa">
+        <div id='col-4-roupa' class="col-4">
+            <div class="icon-container">
+                <a href="#" class="category-icon">
+                    <button class="icon">
+                        <img src="{% static 'img/man.png' %}" width='20' alt='Roupas Masculinas'>
+                        <p class='icon-describer'>Roupas Masculinas</p>
                     </button>
-                </div>
-                <div class="d-flex">
-                    <a href="{% url 'aluguel' idroupa=roupa.id_roupas %}">Alugar</a>
-                </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="icon-container">
+                <a href="#" class="category-icon">
+                    <button class="icon">
+                        <img src="{% static 'img/woman.png' %}" width='23' alt='Roupas Femininas'>
+                        <p class='icon-describer'>Roupas Femininas</p>
+                    </button>
+                </a>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="icon-container">
+                <a href="#" class="category-icon">
+                    <button class="icon">
+                        <img src="{% static 'img/terno.png' %}" width='40' alt='Ternos Completos'>
+                        <p class='icon-describer'>Ternos Completos</p>
+                    </button>
+                </a>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="icon-container">
+                <a href="#" class="category-icon">
+                    <button class="icon">
+                        <img src="{% static 'img/shoe.png' %}" width='60' alt='Calçados'>
+                        <p id='calçado' class='icon-describer'>Calçados</p>
+                    </button>
+                </a>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="icon-container">
+                <a href="#" class="category-icon">
+                    <button class="icon">
+                        <img src="{% static 'img/heart.png' %}" width='50' alt='Favoritos'>
+                        <p class='icon-describer'>Favoritos</p>
+                    </button>
+                </a>
             </div>
         </div>
     </div>
-</section>
-
-{% if roupas_relacionadas %}
-<!-- Related items section-->
-<section class="py-5 bg-light">
-    <div class="container px-4 px-lg-5 mt-5">
-        <h2 class="fw-bolder mb-4">Produtos Relacionados</h2>
-        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-            {% for roupa in roupas %}
-            {% include 'componentes/roupa_card.html' with roupa=roupa %}
-            {% endfor %}
+</div>
+</header>
+<section class="py-5">
+        <div id='roupa1'>
+            <img class="imagem_roupa" src="{{roupa.foto.url}}" alt="{{ roupa.nome }}"></img>
+            <div class="roupa-container">
+                <h1  id="nome-roupa" class="display-5 fw-bolder">{{roupa.nome}}</h1>
+                <div class="fs-5 mb-5">
+                    <!-- <span class="text-decoration-line-through">$ {{roupa.preco_aluguel}}</span> -->
+                    <img id='card-logo' src="{% static 'img/creditcard.png' %}">
+                    <span id='preco-aluguel'>R$ {{roupa.preco_aluguel}}</span>
+                    <div class='botão-aluguel'>
+                        <button id='add-to-cart' class="btn btn-outline-dark flex-shrink-0" type="button" onclick="handleAddToCart('{{roupa.id_roupas}}', '{{roupa.nome}}')">
+                            Alugar
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
+<div class="linha"></div>
+    <div class='desc-container'>
+        <img class='desc-logo' src= '{% static "img/calendar.png" %}'>
+            <p class='desc'> Cancelamento gratuito em até 48 horas </p>
     </div>
-</section>
-{% endif %}
-
-<script type="text/javascript">
-    function handleAddToCart(roupaId, name) {
-        const qtdField = document.getElementById("quantity")
-
-        addToCart(roupaId, name, parseInt(qtdField.value));
-        qtdField.value = 1;
-        alert("Produto adicionado");
-    }
-</script>
+    <div class='desc-container'>
+        <img class='desc-logo' src='{% static "img/location.png" %}' >
+            <p class='desc'> Retirada no balcão ou em local desejado </p>
+    </div>
+    <div class='desc-container'>
+        <img class='desc-logo' src='{% static "img/ruler.png" %}' >
+            <p class='desc'> Atenção as medições do item </p>
+    </div>
+<div class="linha"></div>
 {% endblock %}
