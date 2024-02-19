@@ -7,51 +7,51 @@
 <header>
     <div class="row-roupa">
         <div id='col-4-roupa' class="col-4">
-            <div class="icon-container">
+            <div class="roupa-icon-container">
                 <a href="#" class="category-icon">
                     <button class="icon">
-                        <img src="{% static 'img/man.png' %}" width='20' alt='Roupas Masculinas'>
-                        <p class='icon-describer'>Roupas Masculinas</p>
+                        <img src="{% static 'img/man.png' %}" width='10' alt='Roupas Masculinas'>
+                        <p id='icon-descriver-roupa' class='icon-describer'>Roupas Masculinas</p>
                     </button>
                 </a>
             </div>
         </div>
         <div class="col-4">
-            <div class="icon-container">
+            <div class="roupa-icon-container">
                 <a href="#" class="category-icon">
                     <button class="icon">
-                        <img src="{% static 'img/woman.png' %}" width='23' alt='Roupas Femininas'>
-                        <p class='icon-describer'>Roupas Femininas</p>
+                        <img src="{% static 'img/woman.png' %}" width='12.5' alt='Roupas Femininas'>
+                        <p id='icon-descriver-roupa' class='icon-describer'>Roupas Femininas</p>
                     </button>
                 </a>
             </div>
         </div>
         <div class="col-4">
-            <div class="icon-container">
+            <div class="roupa-icon-container">
                 <a href="#" class="category-icon">
                     <button class="icon">
-                        <img src="{% static 'img/terno.png' %}" width='40' alt='Ternos Completos'>
-                        <p class='icon-describer'>Ternos Completos</p>
+                        <img src="{% static 'img/terno.png' %}" width='20' alt='Ternos Completos'>
+                        <p id='icon-descriver-roupa' class='icon-describer'>Ternos Completos</p>
                     </button>
                 </a>
             </div>
         </div>
         <div class="col-4">
-            <div class="icon-container">
+            <div class="roupa-icon-container">
                 <a href="#" class="category-icon">
                     <button class="icon">
-                        <img src="{% static 'img/shoe.png' %}" width='60' alt='Calçados'>
-                        <p id='calçado' class='icon-describer'>Calçados</p>
+                        <img src="{% static 'img/shoe.png' %}" width='30' alt='Calçados'>
+                        <p id='icon-descriver-roupa'  class='icon-describer'>Calçados</p>
                     </button>
                 </a>
             </div>
         </div>
         <div class="col-4">
-            <div class="icon-container">
+            <div class="roupa-icon-container">
                 <a href="#" class="category-icon">
                     <button class="icon">
-                        <img src="{% static 'img/heart.png' %}" width='50' alt='Favoritos'>
-                        <p class='icon-describer'>Favoritos</p>
+                        <img src="{% static 'img/heart.png' %}" width='25' alt='Favoritos'>
+                        <p id='icon-descriver-roupa' class='icon-describer'>Favoritos</p>
                     </button>
                 </a>
             </div>
@@ -61,25 +61,52 @@
 </header>
 <section class="py-5">
         <div id='roupa1'>
-            <img class="imagem_roupa" src="{{roupa.foto.url}}" alt="{{ roupa.nome }}"></img>
             <div class="roupa-container">
-                <h1  id="nome-roupa" class="display-5 fw-bolder">{{roupa.nome}}</h1>
+                <!--<h1  id="nome-roupa" class="display-5 fw-bolder">{{roupa.nome}}</h1>-->
                 <div class="fs-5 mb-5">
                     <!-- <span class="text-decoration-line-through">$ {{roupa.preco_aluguel}}</span> -->
-                    <img id='card-logo' src="{% static 'img/creditcard.png' %}">
+                    <!--<img id='card-logo' src="{% static 'img/creditcard.png' %}">-->
                     <!-- ESSE CAMPO está na variação agora: <span id='preco-aluguel'>R$ {{roupa.preco_aluguel}}</span> -->
-                    <div>
-                        {% for variacao in variacoes%}
-                        <div>cor: {{variacao.cor.titulo}} / tamanho: {{variacao.tamanho.titulo }} / preço: {{variacao.preco_aluguel}}</div>
-                            {% for variacaoFoto in variacao.fotosroupavariacao_set.all%}
-                            <img src="/media/{{variacaoFoto.fotoUrl}}"></img>
+                    <div class='fotos-all'>
+                    {% for variacao in variacoes%}
+                        <div class='fotos-roupas'>
+                        {% for variacaoFoto in variacao.fotosroupavariacao_set.all%}
+                            <div class='foto-roupa'>
+                            <img class='roupa-variacao' src="/media/{{variacaoFoto.fotoUrl}}"></img>
+                            </div>
                             {% endfor%}
+                            
+                        </div>
+                    <img class='imagem-main' src='/media/{{roupa.fotosroupas_set.all.0.fotoUrl}}'>
+                    <div>
+                    <h1  id="nome-roupa" class="display-5 fw-bolder">{{roupa.nome}}</h1>
+                    <div id='preco-cartão'>
+                    <img id='card-logo' src="{% static 'img/creditcard.png' %}">
+                    {% for variacao in variacoes%}
+                    <h1 id='preco-alugar'> R$ {{variacao.preco_aluguel}}</h1>
+                    </div>
+                    <p class='detalhes-roupa'>Cor: {{variacao.cor.titulo}} - Tamanho: {{variacao.tamanho.titulo }}</p>
+                    {% endfor %}
+                    <div class='botão-aluguel'>
+                        <button id='add-to-cart' class="btn btn-outline-dark flex-shrink-0" type="button" onclick="handleAddToCart('{{roupa.id_roupas}}', '{{roupa.nome}}')">
+                            Alugar
+                        </button>
+                    <div>
+
+                    </div>
+                    <div>
+                        
+                        
+                        <!--<div class='detalhes-roupa'>cor: {{variacao.cor.titulo}} / tamanho: {{variacao.tamanho.titulo }} / preço: {{variacao.preco_aluguel}}</div>
+                            
+                        
                         {% endfor %}
                     </div>
                     <div class='botão-aluguel'>
                         <button id='add-to-cart' class="btn btn-outline-dark flex-shrink-0" type="button" onclick="handleAddToCart('{{roupa.id_roupas}}', '{{roupa.nome}}')">
                             Alugar
                         </button>
+                    -->
                     </div>
                 </div>
             </div>
@@ -98,4 +125,24 @@
             <p class='desc'> Atenção as medições do item </p>
     </div>
 <div class="linha"></div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Obtém todas as imagens de variação
+        const imagensVariacao = document.querySelectorAll('.roupa-variacao');
+
+        // Adiciona um evento de clique a cada imagem de variação
+        imagensVariacao.forEach(function(imagem) {
+            imagem.addEventListener('click', function() {
+                // Obtém o src da imagem de variação clicada
+                const src = imagem.getAttribute('src');
+
+                // Obtém a imagem principal
+                const imagemPrincipal = document.querySelector('.imagem-main');
+
+                // Altera o src da imagem principal para o src da imagem de variação clicada
+                imagemPrincipal.setAttribute('src', src);
+            });
+        });
+    });
+</script>
 {% endblock %}

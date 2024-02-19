@@ -81,7 +81,7 @@ def obter_token_google(request):
 def index(request):
     query = request.GET.get('q', '')
     roupas = Roupas.objects.all()
-    roupa = Roupas.objects.get(id_roupas=2)
+    precos = ProdutoVariacao.objects.all()
     roupas_enumeradas = list(enumerate(roupas))
     ultimas_roupas_query = Roupas.objects
     if (query):
@@ -90,7 +90,8 @@ def index(request):
 
     context = {
         "roupas": ultimas_roupas,
-        'roupas_enumeradas':roupas_enumeradas
+        'roupas_enumeradas':roupas_enumeradas,
+        'precos':precos
     }
     return render(request, "index.html",context)
 

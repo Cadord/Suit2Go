@@ -235,9 +235,10 @@ font-size: 2vh;
 
 #nome-roupa {
   font-family: "Nunito", sans-serif;
-  font-optical-sizing: auto;
+  font-size: 30px;
   font-weight: 200;
   max-width: fit-content;
+  margin: 10%;
 }
 
 #preco-aluguel {
@@ -248,8 +249,8 @@ font-size: 2vh;
 }
 
 #card-logo {
-  width: 50px;
-  height: 50px;
+  width: 20px;
+  height: 20px;
   margin-bottom: 1%;
   max-width: fit-content;
 }
@@ -264,10 +265,11 @@ font-size: 2vh;
 #add-to-cart {
   background-color: rgb(98, 211, 113);
   border-radius: 100px;
-  width: 380px;
+  width: 180px;
   font-family: "Nunito", sans-serif;
   font-optical-sizing: auto;
-  font-size: 100%;
+  font-size: 15px;
+  margin-left: 5%;
 
 }
 
@@ -276,13 +278,13 @@ font-size: 2vh;
   align-items: center;
   border: none; /* Remover a borda padrão */
   border-top: 2px solid black; /* Estilizar a linha */
-  width: 35%; /* Definir a largura da linha */
+  width: 50%; /* Definir a largura da linha */
   margin-left: 5%;
 }
 
 .desc-logo {
-  width: 60px;
-  height: 60px;
+  width: 30px;
+  height: 30px;
   margin-left: 2%;
   margin-top: 0%;
   max-width: fit-content;
@@ -290,7 +292,7 @@ font-size: 2vh;
 
 .desc {
   font-family: "Nunito", sans-serif;
-  font-size: 20px;
+  font-size: 15px;
   margin-left: 3%;
 }
 
@@ -330,4 +332,60 @@ font-size: 2vh;
   margin-left: 8%;
   display: flex;
   max-width: fit-content;
+}
+
+.roupa-variacao {
+  width: 100px;
+  height: 100px;
+}
+
+.foto-roupa {
+  margin: 20px;
+  max-width: fit-content;
+  margin-bottom:
+  
+}
+
+.fotos-roupas {
+  margin-bottom: 10%;
+}
+.imagem-main {
+  margin-top: 7%;
+  display: flex;
+  width: 300px;
+  height: 300px;
+}
+
+.fotos-all{
+  display: flex;
+}
+
+#icon-descriver-roupa {
+  font-size: 10px;
+}
+
+.row-roupa {
+  max-height: fit-content;
+  max-width: fit-content;
+}
+
+#preco-cartão {
+  display: flex;
+  margin-left: 10%;
+}
+
+#preco-alugar {
+  font-family: 'Nunito',sans-serif;
+  font-size: 15px;
+  margin-left: 5%;
+}
+
+.detalhes-roupa {
+  font-family: 'Nunito', sans-serif;
+  font-size: 15px;
+  margin-left: 10%;
+}
+
+.roupa-icon-container {
+  margin-top: 30%;
 }
