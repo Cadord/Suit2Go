@@ -7,51 +7,51 @@
 <header>
     <div class="row-roupa">
         <div id='col-4-roupa' class="col-4">
-            <div class="icon-container">
+            <div class="roupa-icon-container">
                 <a href="#" class="category-icon">
                     <button class="icon">
-                        <img src="{% static 'img/man.png' %}" width='20' alt='Roupas Masculinas'>
-                        <p class='icon-describer'>Roupas Masculinas</p>
+                        <img src="{% static 'img/man.png' %}" width='10' alt='Roupas Masculinas'>
+                        <p id='icon-descriver-roupa' class='icon-describer'>Roupas Masculinas</p>
                     </button>
                 </a>
             </div>
         </div>
         <div class="col-4">
-            <div class="icon-container">
+            <div class="roupa-icon-container">
                 <a href="#" class="category-icon">
                     <button class="icon">
-                        <img src="{% static 'img/woman.png' %}" width='23' alt='Roupas Femininas'>
-                        <p class='icon-describer'>Roupas Femininas</p>
+                        <img src="{% static 'img/woman.png' %}" width='12.5' alt='Roupas Femininas'>
+                        <p id='icon-descriver-roupa' class='icon-describer'>Roupas Femininas</p>
                     </button>
                 </a>
             </div>
         </div>
         <div class="col-4">
-            <div class="icon-container">
+            <div class="roupa-icon-container">
                 <a href="#" class="category-icon">
                     <button class="icon">
-                        <img src="{% static 'img/terno.png' %}" width='40' alt='Ternos Completos'>
-                        <p class='icon-describer'>Ternos Completos</p>
+                        <img src="{% static 'img/terno.png' %}" width='20' alt='Ternos Completos'>
+                        <p id='icon-descriver-roupa' class='icon-describer'>Ternos Completos</p>
                     </button>
                 </a>
             </div>
         </div>
         <div class="col-4">
-            <div class="icon-container">
+            <div class="roupa-icon-container">
                 <a href="#" class="category-icon">
                     <button class="icon">
-                        <img src="{% static 'img/shoe.png' %}" width='60' alt='Calçados'>
-                        <p id='calçado' class='icon-describer'>Calçados</p>
+                        <img src="{% static 'img/shoe.png' %}" width='30' alt='Calçados'>
+                        <p id='icon-descriver-roupa'  class='icon-describer'>Calçados</p>
                     </button>
                 </a>
             </div>
         </div>
         <div class="col-4">
-            <div class="icon-container">
+            <div class="roupa-icon-container">
                 <a href="#" class="category-icon">
                     <button class="icon">
-                        <img src="{% static 'img/heart.png' %}" width='50' alt='Favoritos'>
-                        <p class='icon-describer'>Favoritos</p>
+                        <img src="{% static 'img/heart.png' %}" width='25' alt='Favoritos'>
+                        <p id='icon-descriver-roupa' class='icon-describer'>Favoritos</p>
                     </button>
                 </a>
             </div>
@@ -60,42 +60,107 @@
 </div>
 </header>
 <section class="py-5">
-        <div id='roupa1'>
-            <img class="imagem_roupa" src="/media/{{ roupa.fotosroupas_set.all.0.fotoUrl }}" alt="{{ roupa.nome }}"></img>
-            <div class="roupa-container">
-                <h1  id="nome-roupa" class="display-5 fw-bolder">{{roupa.nome}}</h1>
-                <div class="fs-5 mb-5">
-                    <!-- <span class="text-decoration-line-through">$ {{roupa.preco_aluguel}}</span> -->
-                    <img id='card-logo' src="{% static 'img/creditcard.png' %}">
-                    <!-- ESSE CAMPO está na variação agora: <span id='preco-aluguel'>R$ {{roupa.preco_aluguel}}</span> -->
-                    <div>
-                        {% for variacao in variacoes%}
-                        <div>cor: {{variacao.cor.titulo}} / tamanho: {{variacao.tamanho.titulo }} / preço: {{variacao.preco_aluguel}}</div>
-                            {% for variacaoFoto in variacao.fotosroupavariacao_set.all%}
-                            <img src="/media/{{variacaoFoto.fotoUrl}}"></img>
-                            {% endfor%}
-                        {% endfor %}
-                    </div>
-                    <div class='botão-aluguel'>
-                        <button id='add-to-cart' class="btn btn-outline-dark flex-shrink-0" type="button" onclick="handleAddToCart('{{roupa.id_roupas}}', '{{roupa.nome}}')">
-                            Alugar
-                        </button>
+    <div id='roupa1'>
+        <div class="roupa-container">
+            <!--<h1  id="nome-roupa" class="display-5 fw-bolder">{{roupa.nome}}</h1>-->
+            {% for variacao in variacoes %}
+            {% if forloop.first %}
+            <div class="fs-5 mb-5 variacoes-roupa-group" id="variacao-{{variacao.cor.id}}-{{variacao.tamanho.id}}">
+                <!-- <span class="text-decoration-line-through">$ {{roupa.preco_aluguel}}</span> -->
+                <!--<img id='card-logo' src="{% static 'img/creditcard.png' %}">-->
+                <!-- ESSE CAMPO está na variação agora: <span id='preco-aluguel'>R$ {{roupa.preco_aluguel}}</span> -->
+                {% comment %} <div class='fotos-roupas'>
+                    <div class='fotos-all'>
+                    {% for variacaoFoto in variacao.fotosroupavariacao_set.all%}
+                        <div class='foto-roupa'>
+                            <img class='roupa-variacao' src="/media/{{variacaoFoto.fotoUrl}}"></img>
+                        </div>
+                    {% endfor%}
+                    </div> {% endcomment %}
+                    <img class='imagem-main' src='/media/{{roupa.fotosroupas_set.all.0.fotoUrl}}'>
+                </div>
+                <div>
+                    <div class='details-section'>
+                        <h1  id="nome-roupa" class="display-5 fw-bolder">{{roupa.nome}}</h1>
+                        <div id='preco-cartão'>
+                            <img id='card-logo' src="{% static 'img/creditcard.png' %}">
+                            <h1 id='preco-alugar'> R$ {{variacao.preco_aluguel}}</h1>
+                        </div>
+                        <div class='colors'>
+                            <p>Cores:</p>
+                            {% for variacao in variacoes %}
+                                {% with primeira_foto=variacao.fotosroupavariacao_set.first %}
+                                    {% if primeira_foto %}
+                                            <img id='botao-roupa' class='roupa-variacao' src="/media/{{ primeira_foto.fotoUrl }}" alt="{{ primeira_foto.cor.titulo }}">
+                                    {% endif %}
+                                {% endwith %}
+                            {% endfor %}
+                        </div>
+                        <p>Tamanhos:</p>
+                        <div class='tamanhos-container'>
+                            {% for tamanho in tamanhos %}
+                                <p class='tamanhos'>{{ tamanho }}</p>
+                            {% endfor %}
+                        </div>
+                        <div class='botão-aluguel'>
+                            <button id='add-to-cart' class="btn btn-outline-dark flex-shrink-0" type="button" onclick="handleAddToCart('{{roupa.id_roupas}}', '{{roupa.nome}}')">
+                                Alugar
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
+            {% endif %}
+            {% endfor%}
         </div>
+    </div>
+    <div class="linha"></div>
+    <div class='desc-container'>
+        <img class='desc-logo' src= '{% static "img/calendar.png" %}' />
+        <p class='desc'> Cancelamento gratuito em até 48 horas </p>
+    </div>
+    <div class='desc-container'>
+        <img class='desc-logo' src='{% static "img/location.png" %}' />
+        <p class='desc'> Retirada no balcão ou em local desejado </p>
+    </div>
+    <div class='desc-container'>
+        <img class='desc-logo' src='{% static "img/ruler.png" %}' />
+        <p class='desc'> Atenção as medições do item </p>
+    </div>
+</section>
 <div class="linha"></div>
-    <div class='desc-container'>
-        <img class='desc-logo' src= '{% static "img/calendar.png" %}'>
-            <p class='desc'> Cancelamento gratuito em até 48 horas </p>
-    </div>
-    <div class='desc-container'>
-        <img class='desc-logo' src='{% static "img/location.png" %}' >
-            <p class='desc'> Retirada no balcão ou em local desejado </p>
-    </div>
-    <div class='desc-container'>
-        <img class='desc-logo' src='{% static "img/ruler.png" %}' >
-            <p class='desc'> Atenção as medições do item </p>
-    </div>
-<div class="linha"></div>
+<script>
+    var tamanhoSelecionado = null;
+    var corSelecionado = null;
+
+    function selecionarTamanho(id) {
+        tamanhoSelecionado = id;
+    }
+
+    function selecionarCor(id, imagemUrl) {
+        corSelecionado = id;
+        atualizarImagemPrincipal(imagemUrl);
+    }
+
+    function atualizarImagemPrincipal(imagemUrl) {
+        const imagemPrincipal = document.querySelector('.imagem-main');
+        imagemPrincipal.setAttribute('src', imagemUrl);
+    }
+    
+    document.addEventListener('DOMContentLoaded', function() {
+        // Obtém todas as imagens de variação
+        const imagensVariacao = document.querySelectorAll('.roupa-variacao');
+
+        // Adiciona um evento de clique a cada imagem de variação
+        imagensVariacao.forEach(function(imagem) {
+            imagem.addEventListener('click', function() {
+                // Obtém o src da imagem de variação clicada
+                const src = imagem.getAttribute('src');
+
+                // Chama a função para atualizar a imagem principal
+                atualizarImagemPrincipal(src);
+            });
+        });
+    });
+</script>
 {% endblock %}

@@ -81,7 +81,7 @@ def obter_token_google(request):
 def index(request):
     query = request.GET.get('q', '')
     roupas = Roupas.objects.all()
-    # roupa = Roupas.objects.get(id_roupas=2)
+    # precos = ProdutoVariacao.objects.all()
     roupas_enumeradas = list(enumerate(roupas))
     ultimas_roupas_query = Roupas.objects
     if (query):
@@ -90,7 +90,8 @@ def index(request):
 
     context = {
         "roupas": ultimas_roupas,
-        'roupas_enumeradas':roupas_enumeradas
+        'roupas_enumeradas':roupas_enumeradas,
+        'precos':precos
     }
 
     return render(request, "index.html",context)
@@ -125,11 +126,17 @@ def cadastro_roupa(request):
     context = {'form': form}
     return render(request, template_name='cadastro_roupa.html', context=context)
 
-def roupa_dinamico(request,idroupa):
+def roupa_dinamico(request, idroupa):
     roupa = Roupas.objects.get(id_roupas=idroupa)
-    variacoes = ProdutoVariacao.objects.select_related('cor').select_related('tamanho').filter(produto=idroupa).all()
-    context = { 'roupa': roupa, 'variacoes': variacoes }
-    return render(request,'roupa.html', context)
+    cores = set()
+    for produto_variacao in ProdutoVariacao.objects.select_related('cor').filter(produto=idroupa):
+        cores.add(produto_variacao.cor)
+    tamanhos = set()
+    for produto_variacao in ProdutoVariacao.objects.select_related('tamanho').filter(produto=idroupa):
+        tamanhos.add(produto_variacao.tamanho)
+    variacoes = ProdutoVariacao.objects.select_related('cor').select_related('tamanho').filter(produto=idroupa)
+    context = {'roupa': roupa, 'selected': {}, 'variacoes': variacoes, 'cores': cores, 'tamanhos': tamanhos}
+    return render(request, 'roupa.html', context)
 
 def aluguel(request, idroupa):
     form = DateForm()

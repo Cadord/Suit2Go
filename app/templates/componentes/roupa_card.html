@@ -1,20 +1,19 @@
 <div class="col mb-5">
     <div id='container-rou' class="card h-100">
         <!-- Product image-->
-        <img id='card-roupa' class="card-img-top roupa-thumbnail imagem-card" src="media/{{roupa.fotosroupas_set.all.0.fotoUrl}}" alt="{{ roupa.nome }}" />
+        <img id='card-roupa' class="card-img-top roupa-thumbnail imagem-card" src="media/{{ roupa.fotosroupas_set.all.0.fotoUrl }}" alt="{{ roupa.nome }}" />
         <!-- Product details-->
         <div class="card-body p-4">
             <div class="text-center">
                 <!-- Product name-->
                 <h5 class="fw-bolder">{{ roupa.nome }}</h5>
                 <!-- Product price-->
-                R$ {{roupa.preco_aluguel}}
+                <p>Preço: R$ {{ variacao.preco_aluguel }}</p>
             </div>
         </div>
         <!-- Product actions-->
         <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-            <div class="text-center"><a class="btn btn-outline-dark mt-auto"
-                    href="{% url 'roupa' idroupa=roupa.id_roupas %}">Ver mais</a></div>
+            <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="{% url 'roupa' idroupa=roupa.id_roupas %}">Ver mais</a></div>
         </div>
     </div>
 </div>

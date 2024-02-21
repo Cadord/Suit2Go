@@ -218,7 +218,7 @@ font-size: 2vh;
 }
 
 #base-footer {
-  margin-top: 5%;
+  margin-top: 30%;
 }
 
 .footer-container {
@@ -235,7 +235,7 @@ font-size: 2vh;
 
 #nome-roupa {
   font-family: "Nunito", sans-serif;
-  font-optical-sizing: auto;
+  font-size: 30px;
   font-weight: 200;
   max-width: fit-content;
 }
@@ -248,8 +248,8 @@ font-size: 2vh;
 }
 
 #card-logo {
-  width: 50px;
-  height: 50px;
+  width: 30px;
+  height: 30px;
   margin-bottom: 1%;
   max-width: fit-content;
 }
@@ -264,10 +264,11 @@ font-size: 2vh;
 #add-to-cart {
   background-color: rgb(98, 211, 113);
   border-radius: 100px;
-  width: 380px;
+  width: 180px;
   font-family: "Nunito", sans-serif;
   font-optical-sizing: auto;
-  font-size: 100%;
+  font-size: 15px;
+  margin-left: 5%;
 
 }
 
@@ -276,13 +277,13 @@ font-size: 2vh;
   align-items: center;
   border: none; /* Remover a borda padrão */
   border-top: 2px solid black; /* Estilizar a linha */
-  width: 35%; /* Definir a largura da linha */
+  width: 50%; /* Definir a largura da linha */
   margin-left: 5%;
 }
 
 .desc-logo {
-  width: 60px;
-  height: 60px;
+  width: 30px;
+  height: 30px;
   margin-left: 2%;
   margin-top: 0%;
   max-width: fit-content;
@@ -290,7 +291,7 @@ font-size: 2vh;
 
 .desc {
   font-family: "Nunito", sans-serif;
-  font-size: 20px;
+  font-size: 15px;
   margin-left: 3%;
 }
 
@@ -311,6 +312,7 @@ font-size: 2vh;
 /* Garante que todos os cards tenham a mesma altura */
 .card {
   height: 100%;
+  
 }
 
 /* Define um tamanho fixo para as imagens dentro dos cards */
@@ -330,4 +332,135 @@ font-size: 2vh;
   margin-left: 8%;
   display: flex;
   max-width: fit-content;
+}
+
+.roupa-variacao {
+  width: 100px;
+  height: 100px;
+}
+
+.foto-roupa {
+  display: flex;
+  margin: 20px;
+  max-width: fit-content;
+  
+}
+
+.fotos-roupas {
+  margin-bottom: 10%;
+}
+.imagem-main {
+  margin-left: 5%;
+  margin-top: 7%;
+  display: flex;
+  width: 380px;
+  height: 380px;
+}
+
+.fotos-all{
+  display: flex;
+}
+
+#icon-descriver-roupa {
+  font-size: 10px;
+}
+
+.row-roupa {
+  max-height: fit-content;
+  max-width: fit-content;
+}
+
+#preco-cartão {
+  display: flex;
+}
+
+#preco-alugar {
+  font-family: 'Nunito',sans-serif;
+  font-size: 25px;
+  margin-left: 5%;
+}
+
+.detalhes-roupa {
+  flex:1;
+  font-family: 'Nunito', sans-serif;
+  font-size: 15px;
+  margin-left: 10%;
+}
+
+.roupa-icon-container {
+  margin-top: 30%;
+}
+
+.corBotao {
+  max-width: fit-content;
+  max-height: fit-content;
+  margin: 5px;
+}
+
+.carrinho-header{
+  display: flex;
+  font-family: 'Nunito', sans-serif;
+
+
+}
+
+.carrinho-icon {
+  width: fit-content;
+  height: 30px;
+  margin: 5px;
+}
+
+.cart {
+  font-family: 'Nunito', sans-serif;
+}
+
+.cart-prod-quant {
+  border: 2px solid;
+}
+
+#cartItem {
+  border: 2px solid;
+
+}
+
+#cart-none {
+  border: 2px solid;
+}
+
+.details-section {
+    position: absolute;
+    right: 40%;
+    top: 42%;
+}
+
+.colors {
+  align-items: center;
+}
+
+.sizes {
+  margin-bottom: 20px;
+}
+
+.tamanhoBotao {
+  margin: 5px;
+}
+
+.imagem-card {
+  width: 100%; /* Ensures the image fills the width of its container */
+  height: 100%; /* Ensures the image fills the height of its container */
+  object-fit: fill; /* Ensures the aspect ratio is maintained while covering the entire container */
+}
+
+#botao-roupa {
+  width: 60px;
+  height: 60px;
+}
+
+.tamanhos-container {
+  display: flex; /* Use flexbox para alinhar os tamanhos lado a lado */
+  flex-wrap: wrap; /* Permita que os tamanhos quebrem para a linha seguinte se não houver espaço suficiente */
+}
+
+.tamanhos {
+  margin-right: 10px; /* Adicione um espaço à direita entre os tamanhos */
 }

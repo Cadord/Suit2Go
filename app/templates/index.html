@@ -17,12 +17,12 @@
                 </form>
             </div>
         </div>
-        <div class="row">
+        <div id='icones-index' class="row">
             <div class="col-4">
                 <div class="icon-container">
                     <a href="#" class="category-icon">
                         <button class="icon">
-                            <img src="{% static 'img/man.png' %}" width='20' alt='Roupas Masculinas'>
+                            <img src="{% static 'img/man.png' %}" width='10' alt='Roupas Masculinas'>
                             <p class='icon-describer'>Roupas Masculinas</p>
                         </button>
                     </a>
@@ -32,7 +32,7 @@
                 <div class="icon-container">
                     <a href="#" class="category-icon">
                         <button class="icon">
-                            <img src="{% static 'img/woman.png' %}" width='23' alt='Roupas Femininas'>
+                            <img src="{% static 'img/woman.png' %}" width='11.5' alt='Roupas Femininas'>
                             <p class='icon-describer'>Roupas Femininas</p>
                         </button>
                     </a>
@@ -42,7 +42,7 @@
                 <div class="icon-container">
                     <a href="#" class="category-icon">
                         <button class="icon">
-                            <img src="{% static 'img/terno.png' %}" width='40' alt='Ternos Completos'>
+                            <img src="{% static 'img/terno.png' %}" width='20' alt='Ternos Completos'>
                             <p class='icon-describer'>Ternos Completos</p>
                         </button>
                     </a>
@@ -52,7 +52,7 @@
                 <div class="icon-container">
                     <a href="#" class="category-icon">
                         <button class="icon">
-                            <img src="{% static 'img/shoe.png' %}" width='60' alt='Calçados'>
+                            <img src="{% static 'img/shoe.png' %}" width='30' alt='Calçados'>
                             <p id='calçado' class='icon-describer'>Calçados</p>
                         </button>
                     </a>
@@ -62,7 +62,7 @@
                 <div class="icon-container">
                     <a href="#" class="category-icon">
                         <button class="icon">
-                            <img src="{% static 'img/heart.png' %}" width='50' alt='Favoritos'>
+                            <img src="{% static 'img/heart.png' %}" width='25' alt='Favoritos'>
                             <p class='icon-describer'>Favoritos</p>
                         </button>
                     </a>
@@ -97,16 +97,20 @@
     <div class="container px-4 px-lg-5 mt-5">
         <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
             {% if roupas %}
-            {% for roupa in roupas %}
-            {% include 'componentes/roupa_card.html' with roupa=roupa %}
-            {% endfor %}
-            {% else %}
-            <div class="row">
-                <div class="col-12 text-center">
-                    <h1>Nenhuma roupa encontrada...</h1>
-                </div>
-            </div>
+    {% for roupa in roupas %}
+        {% with variacao=roupa.produtovariacao_set.first %}
+            {% if variacao %}
+                {% include 'componentes/roupa_card.html' with roupa=roupa variacao=variacao %}
             {% endif %}
+        {% endwith %}
+    {% endfor %}
+{% else %}
+    <div class="row">
+        <div class="col-12 text-center">
+            <h1>Nenhuma roupa encontrada...</h1>
+        </div>
+    </div>
+{% endif %}
         </div>
     </div>
 </section>

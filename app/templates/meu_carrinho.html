@@ -30,10 +30,14 @@
 </script>
 
 <div>
-  <h2>Itens no Carrinho</h2>
+  <div class='carrinho-header'>
+    <img class='carrinho-icon' src="{% static  'img/shop-cart.png' %}">
+    <h2>Carrinho de compras</h2>
+  </div>
+
   {% if carrinho %}
   <table class='cart' id="tableCartItems">
-    <thead>
+    <thead class = 'cart-prod-quant'>
       <tr>
         <th>Produto</th>
         <th>Quantidade</th>
@@ -57,7 +61,7 @@
   
     {% if carrinho.items|length == 0 %}
       <tr>
-        <td colspan="3">Nenhum item no carrinho</td>
+        <td id='cart-none' colspan="3">Nenhum item no carrinho</td>
       </tr>
     {% endif %}
     </tbody>
