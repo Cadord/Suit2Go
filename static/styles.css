@@ -238,7 +238,6 @@ font-size: 2vh;
   font-size: 30px;
   font-weight: 200;
   max-width: fit-content;
-  margin: 10%;
 }
 
 #preco-aluguel {
@@ -249,8 +248,8 @@ font-size: 2vh;
 }
 
 #card-logo {
-  width: 20px;
-  height: 20px;
+  width: 30px;
+  height: 30px;
   margin-bottom: 1%;
   max-width: fit-content;
 }
@@ -373,12 +372,11 @@ font-size: 2vh;
 
 #preco-cartão {
   display: flex;
-  margin-left: 10%;
 }
 
 #preco-alugar {
   font-family: 'Nunito',sans-serif;
-  font-size: 15px;
+  font-size: 25px;
   margin-left: 5%;
 }
 
