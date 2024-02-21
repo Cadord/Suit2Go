@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block title %}User Profile{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <h2>Página do Usuário</h2>
+            <hr>
+            <h3>Histórico de negociações</h3>
+            {% if negotiations %}
+                <ul class="list-group">
+                    {% for negotiation in negotiations %}
+                        <li class="list-group-item">
+                            <p>Date: {{ negotiation.date }}</p>
+                            <p>Items:</p>
+                            <ul>
+                                {% for item in negotiation.items.all %}
+                                    <li>{{ item.product_variation.roupa.nome }} - {{ item.quantity }} x R$ {{ item.price }}</li>
+                                {% endfor %}
+                            </ul>
+                            <p>Total: R$ {{ negotiation.total }}</p>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>Nenhuma negociação encontrada.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

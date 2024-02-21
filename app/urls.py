@@ -18,4 +18,6 @@ urlpatterns = [
     path('roupa/<int:idroupa>/alugar', views.aluguel, name='aluguel'),
     path('social/google-oauth2/', views.authorize_google, name='authorize_google'),
     path('google/callback/', views.google_callback, name='google_callback'),
+    path('profile', views.user_profile, name="user_profile"),
+
 ]

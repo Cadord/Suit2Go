@@ -96,7 +96,7 @@ class FotosRoupas(models.Model):
 
     class Meta:
         managed = True
-        db_table = 'fotosRoupa'
+        db_table = 'fotos_roupa'
 
 class SocialAppAdmin(admin.ModelAdmin):
     list_display = ('provider', 'name', 'client_id', 'secret', 'sites')
@@ -127,11 +127,22 @@ class FotosRoupaVariacao(models.Model):
 
 class Locacoes(models.Model):
     cliente_id = models.ForeignKey(Clientes, on_delete=models.DO_NOTHING)
-    roupa_id = models.ForeignKey(ProdutoVariacao, on_delete=models.DO_NOTHING)
     data_inicio = models.DateField(blank=True, null=True)
     data_termino = models.DateField(blank=True, null=True)
-    valor_aluguel = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+    valor_total = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+    data_negociacao = models.DateTimeField(auto_now_add=True)
     
     class Meta:
         managed = True
         db_table = 'locacoes'
+
+
+class ItensLocacao(models.Model):
+    locacao = models.ForeignKey(Locacoes, on_delete=models.CASCADE)
+    produto_variation = models.ForeignKey(ProdutoVariacao, on_delete=models.CASCADE)
+    quantidade = models.PositiveIntegerField(default=1)
+    preco_unitario = models.DecimalField(max_digits=10, decimal_places=2)
+
+    class Meta:
+        managed = True
+        db_table = 'itens_locacao'

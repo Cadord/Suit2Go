@@ -81,7 +81,7 @@ def obter_token_google(request):
 def index(request):
     query = request.GET.get('q', '')
     roupas = Roupas.objects.all()
-    roupa = Roupas.objects.get(id_roupas=2)
+    # roupa = Roupas.objects.get(id_roupas=2)
     roupas_enumeradas = list(enumerate(roupas))
     ultimas_roupas_query = Roupas.objects
     if (query):
@@ -92,6 +92,7 @@ def index(request):
         "roupas": ultimas_roupas,
         'roupas_enumeradas':roupas_enumeradas
     }
+
     return render(request, "index.html",context)
 
 @receiver(social_account_added)
