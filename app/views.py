@@ -127,12 +127,12 @@ def cadastro_roupa(request):
 
 def roupa_dinamico(request, idroupa):
     roupa = Roupas.objects.get(id_roupas=idroupa)
-    cores = []
+    cores = set()
     for produto_variacao in ProdutoVariacao.objects.select_related('cor').filter(produto=idroupa):
-        cores.append(produto_variacao.cor)
-    tamanhos = []
+        cores.add(produto_variacao.cor)
+    tamanhos = set()
     for produto_variacao in ProdutoVariacao.objects.select_related('tamanho').filter(produto=idroupa):
-        tamanhos.append(produto_variacao.tamanho)
+        tamanhos.add(produto_variacao.tamanho)
     variacoes = ProdutoVariacao.objects.select_related('cor').select_related('tamanho').filter(produto=idroupa)
     context = {'roupa': roupa, 'selected': {}, 'variacoes': variacoes, 'cores': cores, 'tamanhos': tamanhos}
     return render(request, 'roupa.html', context)

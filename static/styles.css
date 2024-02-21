@@ -430,7 +430,7 @@ font-size: 2vh;
 .details-section {
     position: absolute;
     right: 40%;
-    top: 51%;
+    top: 42%;
 }
 
 .colors {
@@ -449,4 +449,18 @@ font-size: 2vh;
   width: 100%; /* Ensures the image fills the width of its container */
   height: 100%; /* Ensures the image fills the height of its container */
   object-fit: fill; /* Ensures the aspect ratio is maintained while covering the entire container */
+}
+
+#botao-roupa {
+  width: 60px;
+  height: 60px;
+}
+
+.tamanhos-container {
+  display: flex; /* Use flexbox para alinhar os tamanhos lado a lado */
+  flex-wrap: wrap; /* Permita que os tamanhos quebrem para a linha seguinte se não houver espaço suficiente */
+}
+
+.tamanhos {
+  margin-right: 10px; /* Adicione um espaço à direita entre os tamanhos */
 }

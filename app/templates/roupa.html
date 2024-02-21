@@ -69,14 +69,14 @@
                 <!-- <span class="text-decoration-line-through">$ {{roupa.preco_aluguel}}</span> -->
                 <!--<img id='card-logo' src="{% static 'img/creditcard.png' %}">-->
                 <!-- ESSE CAMPO está na variação agora: <span id='preco-aluguel'>R$ {{roupa.preco_aluguel}}</span> -->
-                <div class='fotos-roupas'>
+                {% comment %} <div class='fotos-roupas'>
                     <div class='fotos-all'>
                     {% for variacaoFoto in variacao.fotosroupavariacao_set.all%}
                         <div class='foto-roupa'>
                             <img class='roupa-variacao' src="/media/{{variacaoFoto.fotoUrl}}"></img>
                         </div>
                     {% endfor%}
-                    </div>
+                    </div> {% endcomment %}
                     <img class='imagem-main' src='/media/{{roupa.fotosroupas_set.all.0.fotoUrl}}'>
                 </div>
                 <div>
@@ -87,15 +87,20 @@
                             <h1 id='preco-alugar'> R$ {{variacao.preco_aluguel}}</h1>
                         </div>
                         <div class='colors'>
-                        <p> Cores: </p>
-                        {% for corAtual in cores %}
-                            <button class='corBotao' onclick="selecionarCor('{{corAtual.id}}',">{{corAtual.titulo}}</button>
-                        {% endfor %}
+                            <p>Cores:</p>
+                            {% for variacao in variacoes %}
+                                {% with primeira_foto=variacao.fotosroupavariacao_set.first %}
+                                    {% if primeira_foto %}
+                                            <img id='botao-roupa' class='roupa-variacao' src="/media/{{ primeira_foto.fotoUrl }}" alt="{{ primeira_foto.cor.titulo }}">
+                                    {% endif %}
+                                {% endwith %}
+                            {% endfor %}
                         </div>
-                        <div class='sizes'>
-                        {% for tamanho in tamanhos %}
-                            <button class='tamanhoBotao' onclick="selecionarTamanho('{{ tamanho.id }}')">{{ tamanho.titulo }}</button>
-                        {% endfor %}
+                        <p>Tamanhos:</p>
+                        <div class='tamanhos-container'>
+                            {% for tamanho in tamanhos %}
+                                <p class='tamanhos'>{{ tamanho }}</p>
+                            {% endfor %}
                         </div>
                         <div class='botão-aluguel'>
                             <button id='add-to-cart' class="btn btn-outline-dark flex-shrink-0" type="button" onclick="handleAddToCart('{{roupa.id_roupas}}', '{{roupa.nome}}')">
