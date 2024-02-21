@@ -60,72 +60,88 @@
 </div>
 </header>
 <section class="py-5">
-        <div id='roupa1'>
-            <div class="roupa-container">
-                <!--<h1  id="nome-roupa" class="display-5 fw-bolder">{{roupa.nome}}</h1>-->
-                <div class="fs-5 mb-5">
-                    <!-- <span class="text-decoration-line-through">$ {{roupa.preco_aluguel}}</span> -->
-                    <!--<img id='card-logo' src="{% static 'img/creditcard.png' %}">-->
-                    <!-- ESSE CAMPO está na variação agora: <span id='preco-aluguel'>R$ {{roupa.preco_aluguel}}</span> -->
+    <div id='roupa1'>
+        <div class="roupa-container">
+            <!--<h1  id="nome-roupa" class="display-5 fw-bolder">{{roupa.nome}}</h1>-->
+            {% for variacao in variacoes %}
+            {% if forloop.first %}
+            <div class="fs-5 mb-5 variacoes-roupa-group" id="variacao-{{variacao.cor.id}}-{{variacao.tamanho.id}}">
+                <!-- <span class="text-decoration-line-through">$ {{roupa.preco_aluguel}}</span> -->
+                <!--<img id='card-logo' src="{% static 'img/creditcard.png' %}">-->
+                <!-- ESSE CAMPO está na variação agora: <span id='preco-aluguel'>R$ {{roupa.preco_aluguel}}</span> -->
+                <div class='fotos-roupas'>
                     <div class='fotos-all'>
-                    {% for variacao in variacoes%}
-                        <div class='fotos-roupas'>
-                        {% for variacaoFoto in variacao.fotosroupavariacao_set.all%}
-                            <div class='foto-roupa'>
+                    {% for variacaoFoto in variacao.fotosroupavariacao_set.all%}
+                        <div class='foto-roupa'>
                             <img class='roupa-variacao' src="/media/{{variacaoFoto.fotoUrl}}"></img>
-                            </div>
-                            {% endfor%}
-                            
                         </div>
+                    {% endfor%}
+                    </div>
                     <img class='imagem-main' src='/media/{{roupa.fotosroupas_set.all.0.fotoUrl}}'>
-                    <div>
-                    <h1  id="nome-roupa" class="display-5 fw-bolder">{{roupa.nome}}</h1>
-                    <div id='preco-cartão'>
-                    <img id='card-logo' src="{% static 'img/creditcard.png' %}">
-                    {% for variacao in variacoes%}
-                    <h1 id='preco-alugar'> R$ {{variacao.preco_aluguel}}</h1>
-                    </div>
-                    <p class='detalhes-roupa'>Cor: {{variacao.cor.titulo}} - Tamanho: {{variacao.tamanho.titulo }}</p>
-                    {% endfor %}
-                    <div class='botão-aluguel'>
-                        <button id='add-to-cart' class="btn btn-outline-dark flex-shrink-0" type="button" onclick="handleAddToCart('{{roupa.id_roupas}}', '{{roupa.nome}}')">
-                            Alugar
-                        </button>
-                    <div>
-
-                    </div>
-                    <div>
-                        
-                        
-                        <!--<div class='detalhes-roupa'>cor: {{variacao.cor.titulo}} / tamanho: {{variacao.tamanho.titulo }} / preço: {{variacao.preco_aluguel}}</div>
-                            
-                        
+                </div>
+                <div>
+                    <div class='details-section'>
+                        <h1  id="nome-roupa" class="display-5 fw-bolder">{{roupa.nome}}</h1>
+                        <div id='preco-cartão'>
+                            <img id='card-logo' src="{% static 'img/creditcard.png' %}">
+                            <h1 id='preco-alugar'> R$ {{variacao.preco_aluguel}}</h1>
+                        </div>
+                        <div class='colors'>
+                        <p> Cores: </p>
+                        {% for corAtual in cores %}
+                            <button class='corBotao' onclick="selecionarCor('{{corAtual.id}}',">{{corAtual.titulo}}</button>
                         {% endfor %}
-                    </div>
-                    <div class='botão-aluguel'>
-                        <button id='add-to-cart' class="btn btn-outline-dark flex-shrink-0" type="button" onclick="handleAddToCart('{{roupa.id_roupas}}', '{{roupa.nome}}')">
-                            Alugar
-                        </button>
-                    -->
+                        </div>
+                        <div class='sizes'>
+                        {% for tamanho in tamanhos %}
+                            <button class='tamanhoBotao' onclick="selecionarTamanho('{{ tamanho.id }}')">{{ tamanho.titulo }}</button>
+                        {% endfor %}
+                        </div>
+                        <div class='botão-aluguel'>
+                            <button id='add-to-cart' class="btn btn-outline-dark flex-shrink-0" type="button" onclick="handleAddToCart('{{roupa.id_roupas}}', '{{roupa.nome}}')">
+                                Alugar
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
+            {% endif %}
+            {% endfor%}
         </div>
-<div class="linha"></div>
+    </div>
+    <div class="linha"></div>
     <div class='desc-container'>
-        <img class='desc-logo' src= '{% static "img/calendar.png" %}'>
-            <p class='desc'> Cancelamento gratuito em até 48 horas </p>
+        <img class='desc-logo' src= '{% static "img/calendar.png" %}' />
+        <p class='desc'> Cancelamento gratuito em até 48 horas </p>
     </div>
     <div class='desc-container'>
-        <img class='desc-logo' src='{% static "img/location.png" %}' >
-            <p class='desc'> Retirada no balcão ou em local desejado </p>
+        <img class='desc-logo' src='{% static "img/location.png" %}' />
+        <p class='desc'> Retirada no balcão ou em local desejado </p>
     </div>
     <div class='desc-container'>
-        <img class='desc-logo' src='{% static "img/ruler.png" %}' >
-            <p class='desc'> Atenção as medições do item </p>
+        <img class='desc-logo' src='{% static "img/ruler.png" %}' />
+        <p class='desc'> Atenção as medições do item </p>
     </div>
+</section>
 <div class="linha"></div>
 <script>
+    var tamanhoSelecionado = null;
+    var corSelecionado = null;
+
+    function selecionarTamanho(id) {
+        tamanhoSelecionado = id;
+    }
+
+    function selecionarCor(id, imagemUrl) {
+        corSelecionado = id;
+        atualizarImagemPrincipal(imagemUrl);
+    }
+
+    function atualizarImagemPrincipal(imagemUrl) {
+        const imagemPrincipal = document.querySelector('.imagem-main');
+        imagemPrincipal.setAttribute('src', imagemUrl);
+    }
+    
     document.addEventListener('DOMContentLoaded', function() {
         // Obtém todas as imagens de variação
         const imagensVariacao = document.querySelectorAll('.roupa-variacao');
@@ -136,11 +152,8 @@
                 // Obtém o src da imagem de variação clicada
                 const src = imagem.getAttribute('src');
 
-                // Obtém a imagem principal
-                const imagemPrincipal = document.querySelector('.imagem-main');
-
-                // Altera o src da imagem principal para o src da imagem de variação clicada
-                imagemPrincipal.setAttribute('src', src);
+                // Chama a função para atualizar a imagem principal
+                atualizarImagemPrincipal(src);
             });
         });
     });

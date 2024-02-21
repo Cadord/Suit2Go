@@ -218,7 +218,7 @@ font-size: 2vh;
 }
 
 #base-footer {
-  margin-top: 5%;
+  margin-top: 30%;
 }
 
 .footer-container {
@@ -313,6 +313,7 @@ font-size: 2vh;
 /* Garante que todos os cards tenham a mesma altura */
 .card {
   height: 100%;
+  
 }
 
 /* Define um tamanho fixo para as imagens dentro dos cards */
@@ -340,9 +341,9 @@ font-size: 2vh;
 }
 
 .foto-roupa {
+  display: flex;
   margin: 20px;
   max-width: fit-content;
-  margin-bottom:
   
 }
 
@@ -350,10 +351,11 @@ font-size: 2vh;
   margin-bottom: 10%;
 }
 .imagem-main {
+  margin-left: 5%;
   margin-top: 7%;
   display: flex;
-  width: 300px;
-  height: 300px;
+  width: 380px;
+  height: 380px;
 }
 
 .fotos-all{
@@ -381,6 +383,7 @@ font-size: 2vh;
 }
 
 .detalhes-roupa {
+  flex:1;
   font-family: 'Nunito', sans-serif;
   font-size: 15px;
   margin-left: 10%;
@@ -388,4 +391,64 @@ font-size: 2vh;
 
 .roupa-icon-container {
   margin-top: 30%;
+}
+
+.corBotao {
+  max-width: fit-content;
+  max-height: fit-content;
+  margin: 5px;
+}
+
+.carrinho-header{
+  display: flex;
+  font-family: 'Nunito', sans-serif;
+
+
+}
+
+.carrinho-icon {
+  width: fit-content;
+  height: 30px;
+  margin: 5px;
+}
+
+.cart {
+  font-family: 'Nunito', sans-serif;
+}
+
+.cart-prod-quant {
+  border: 2px solid;
+}
+
+#cartItem {
+  border: 2px solid;
+
+}
+
+#cart-none {
+  border: 2px solid;
+}
+
+.details-section {
+    position: absolute;
+    right: 40%;
+    top: 51%;
+}
+
+.colors {
+  align-items: center;
+}
+
+.sizes {
+  margin-bottom: 20px;
+}
+
+.tamanhoBotao {
+  margin: 5px;
+}
+
+.imagem-card {
+  width: 100%; /* Ensures the image fills the width of its container */
+  height: 100%; /* Ensures the image fills the height of its container */
+  object-fit: fill; /* Ensures the aspect ratio is maintained while covering the entire container */
 }

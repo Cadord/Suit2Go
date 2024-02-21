@@ -125,11 +125,17 @@ def cadastro_roupa(request):
     context = {'form': form}
     return render(request, template_name='cadastro_roupa.html', context=context)
 
-def roupa_dinamico(request,idroupa):
+def roupa_dinamico(request, idroupa):
     roupa = Roupas.objects.get(id_roupas=idroupa)
-    variacoes = ProdutoVariacao.objects.select_related('cor').select_related('tamanho').filter(produto=idroupa).all()
-    context = { 'roupa': roupa, 'variacoes': variacoes }
-    return render(request,'roupa.html', context)
+    cores = []
+    for produto_variacao in ProdutoVariacao.objects.select_related('cor').filter(produto=idroupa):
+        cores.append(produto_variacao.cor)
+    tamanhos = []
+    for produto_variacao in ProdutoVariacao.objects.select_related('tamanho').filter(produto=idroupa):
+        tamanhos.append(produto_variacao.tamanho)
+    variacoes = ProdutoVariacao.objects.select_related('cor').select_related('tamanho').filter(produto=idroupa)
+    context = {'roupa': roupa, 'selected': {}, 'variacoes': variacoes, 'cores': cores, 'tamanhos': tamanhos}
+    return render(request, 'roupa.html', context)
 
 def aluguel(request, idroupa):
     form = DateForm()
