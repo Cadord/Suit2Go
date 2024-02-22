@@ -20,8 +20,6 @@ environ.Env.read_env()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SITE_ID= 2
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
@@ -47,8 +45,6 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
-    'django.contrib.sites',
-    'django_extensions',
     'django_migrate_or_rollback'
 ]
 
@@ -118,24 +114,31 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-AUTHENTICATION_BACKENDS = (
+AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend',
-    'social_core.backends.google.GoogleOAuth2',
-)
+]
 
 # URLs configuration
-SOCIAL_AUTH_GOOGLE_OAUTH2_REDIRECT_URI = '/'
-SOCIAL_AUTH_ENABLED = True
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '860607395602-oe07vr5q25nvor970onmdjjm6os7d4tg.apps.googleusercontent.com'
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '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'
-SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = ['https://www.googleapis.com/auth/plus.login']
-SOCIAL_AUTH_REDIRECT_IS_HTTPS = True
-LOGIN_URL = '/social/login/google-oauth2/'
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/'  # Replace with your desired redirect URL after login
+LOGOUT_REDIRECT_URL = '/'  # Replace with your desired redirect URL after logou
+# SOCIAL_AUTH_GOOGLE_OAUTH2_REDIRECT_URI = '/'
+# SOCIAL_AUTH_ENABLED = True
+# SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '179596067338-qri4r6a7q468fk5qhj23rj5rhckmcmds.apps.googleusercontent.com'
+# SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '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'
+# SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = ['https://www.googleapis.com/auth/plus.login']
+# SOCIAL_AUTH_REDIRECT_IS_HTTPS = True
+# LOGIN_URL = '/social/login/google-oauth2/'
+# LOGIN_REDIRECT_URL = '/'
+SOCIALACCOUNT_LOGIN_ON_GET=True
 
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
+        'APP': {
+            'client_id': '179596067338-qri4r6a7q468fk5qhj23rj5rhckmcmds.apps.googleusercontent.com',
+            'secret': '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',
+            'key': 'AIzaSyCQwrySeNZh2UJpiWFs8P6YsoJqpcLV3yk',
+        },
         "SCOPE": [
             "profile",
             "email",

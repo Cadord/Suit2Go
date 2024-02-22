@@ -1,11 +1,12 @@
 from django.contrib import admin
-from app.models import Roupas,Categoria,Cor,Estilo,Tamanho,ProdutoVariacao,FotosRoupas,FotosRoupaVariacao
+from app.models import Roupas,Categoria,Cor,Estilo,Tamanho,ProdutoVariacao,FotosRoupas,FotosRoupaVariacao,Clientes
 
 # Register your models here.
 admin.site.register(Categoria)
 admin.site.register(Cor)
 admin.site.register(Estilo)
 admin.site.register(Tamanho)
+admin.site.register(Clientes)
 
 class FotosRoupasAdmin(admin.StackedInline):
     model = FotosRoupas

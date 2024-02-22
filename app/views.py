@@ -81,7 +81,7 @@ def obter_token_google(request):
 def index(request):
     query = request.GET.get('q', '')
     roupas = Roupas.objects.all()
-    # precos = ProdutoVariacao.objects.all()
+    precos = ProdutoVariacao.objects.all()
     roupas_enumeradas = list(enumerate(roupas))
     ultimas_roupas_query = Roupas.objects
     if (query):
@@ -102,12 +102,10 @@ def handle_google_login(sender, request, sociallogin, **kwargs):
     if sociallogin.account.provider == 'google':
         # O código aqui será executado quando um usuário fizer login usando o provedor Google.
         # Você pode usar as credenciais do OAuth obtidas do Google para interagir com o Google Calendar API.
-        social_token = sociallogin.account.socialtoken_set.first()
-        google_access_token = social_token.token
-        google_refresh_token = social_token.token_secret
-
-
-
+        # social_token = sociallogin.account.socialtoken_set.first()
+        # google_access_token = social_token.token
+        # google_refresh_token = social_token.token_secret
+        pass
 
 
 def cadastro_roupa(request):

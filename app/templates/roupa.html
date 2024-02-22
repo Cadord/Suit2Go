@@ -68,7 +68,7 @@
             <div class="fs-5 mb-5 variacoes-roupa-group" id="variacao-{{variacao.cor.id}}-{{variacao.tamanho.id}}">
                 <!-- <span class="text-decoration-line-through">$ {{roupa.preco_aluguel}}</span> -->
                 <!--<img id='card-logo' src="{% static 'img/creditcard.png' %}">-->
-                <!-- ESSE CAMPO está na variação agora: <span id='preco-aluguel'>R$ {{roupa.preco_aluguel}}</span> -->
+                <!-- ESSE CAMPO está na variação agora: <span id='preco-aluguel'>R$ {{roupa.preco_aluguel}}</span> gluacio -->
                 {% comment %} <div class='fotos-roupas'>
                     <div class='fotos-all'>
                     {% for variacaoFoto in variacao.fotosroupavariacao_set.all%}
@@ -162,5 +162,9 @@
             });
         });
     });
+    function handleAddToCart(roupaId, name) {
+        addToCart(roupaId, name, 1);
+        alert("Produto adicionado");
+    }
 </script>
 {% endblock %}

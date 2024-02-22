@@ -7,29 +7,31 @@
 <link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
 <div>
   <h1>Pode ter um título aqui também se quiser</h1>
-  <div id="passo1">
-    <h2>Primeira etapa</h2>
-    bla bla
-    <div>
-      <button onclick="controlState('passo2')">Próximo</button>
+  <form action="{% url 'checkout' %}" method="post">
+    <div id="passo1">
+      <h2>Primeira etapa</h2>
+      bla bla
+      <div>
+        <button onclick="controlState('passo2')">Próximo</button>
+      </div>
     </div>
-  </div>
-  <div id="passo2">
-    <h2>Segunda etapa</h2>
-    bla bla
-    <div>
-      <button onclick="controlState('passo1')">Anterior</button>
-      <button onclick="controlState('passo3')">Próximo</button>
+    <div id="passo2">
+      <h2>Segunda etapa</h2>
+      bla bla
+      <div>
+        <button onclick="controlState('passo1')">Anterior</button>
+        <button onclick="controlState('passo3')">Próximo</button>
+      </div>
     </div>
-  </div>
-  <div id="passo3">
-    <h2>Etapa final</h2>
-    bla bla
-    <div>
-      <button onclick="controlState('passo2')">Anterior</button>
-      <button onclick="finishCheckout()">Finalizar</button>
+    <div id="passo3">
+      <h2>Etapa final</h2>
+      bla bla
+      <div>
+        <button onclick="controlState('passo2')">Anterior</button>
+        <button type="submit">Finalizar</button>
+      </div>
     </div>
-  </div>
+  </form>
 </div>
 
 <script>
