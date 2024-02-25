@@ -66,6 +66,11 @@ function saveCart(cart) {
   setCookie(CART_KEY, JSON.stringify(cart), 7);
 }
 
+function clearCart() {
+  saveCart({items:[]});
+  updateCartCount();
+}
+
 function updateCartCount() {
   var cart = getCart();
   var qtd = cart.items.reduce(function (prev, current) {

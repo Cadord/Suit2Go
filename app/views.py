@@ -1,13 +1,16 @@
-from .models import Roupas, ProdutoVariacao
-from .forms import RoupasForms, DateForm
+from .models import Roupas, ProdutoVariacao, Locacoes, ItensLocacao, User
+from .forms import RoupasForms, DateForm, CheckoutEnderecoForm, CheckoutDataForm
 from .utils import connect_to_calendar
+from .libs.stripe import create_stripe_payment, get_session_status
 from datetime import datetime, time, timedelta, date
 from django.db.models import Q
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from django.core.exceptions import MultipleObjectsReturned
+from django.core.serializers import serialize
 from django.dispatch import receiver
+from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from google.oauth2 import id_token
 from google.oauth2.credentials import Credentials
@@ -76,22 +79,33 @@ def obter_token_google(request):
 
         return access_token
 
-
+def get_user_id(request):
+    social_token = SocialToken.objects.get(account__user=request.user, account__provider='google')
+    user_id = id_token_info.get('sub')
 
 def index(request):
     query = request.GET.get('q', '')
+    queries = query.split()
+    tags = request.GET.get('t', '').split()
     roupas = Roupas.objects.all()
     precos = ProdutoVariacao.objects.all()
     roupas_enumeradas = list(enumerate(roupas))
     ultimas_roupas_query = Roupas.objects
-    if (query):
-        ultimas_roupas_query = ultimas_roupas_query.filter(Q(nome__icontains=query))
+    is_search = False
+    if len(tags):
+        ultimas_roupas_query = ultimas_roupas_query.filter(Q(tags__id__in=tags)).distinct()
+        is_search = True
+    elif len(queries):
+        ultimas_roupas_query = ultimas_roupas_query.filter(Q(nome__icontains=queries) | Q(tags__name__in=queries) | Q(categoria__titulo__in=queries)).distinct()
+        is_search = True
     ultimas_roupas = ultimas_roupas_query.order_by('nome').all
 
     context = {
         "roupas": ultimas_roupas,
         'roupas_enumeradas':roupas_enumeradas,
-        'precos':precos
+        'precos':precos,
+        'q': query,
+        'is_search': is_search
     }
 
     return render(request, "index.html",context)
@@ -189,7 +203,7 @@ def home(request):
     if social_accounts.exists():
         # Assumindo que você está interessado apenas na conta do Google
         google_account = social_accounts.filter(provider='google').first()
-        access_token = social_account.socialtoken_set.get(account=social_account).token
+        access_token = google_account.socialtoken_set.get(account=social_account).token
         user_name = google_account.extra_data.get('name', '').capitalize()
     else:
         user_name = ''
@@ -197,15 +211,78 @@ def home(request):
     return render(request, 'home.html', {'user_name': f"{user_name.capitalize()}"})
 
 def user_profile(request):
-    return render(request, 'user_profile.html')
+    locacoes = Locacoes.objects.filter(cliente_id=request.user.id).all()
+    return render(request, 'user_profile.html', { 'negotiations': locacoes })
 
 def meu_carrinho(request):
     carrinho = request.COOKIES.get('suit2goCart', '{\'items\':[]}')
+    print(carrinho)
     return render(request, 'meu_carrinho.html', { 'carrinho': ast.literal_eval(carrinho) })
 
 def checkout(request):
-    carrinho = request.COOKIES.get('suit2goCart', '{\'items\':[]}')
-    return render(request, 'checkout.html', { 'carrinho': ast.literal_eval(carrinho) })
+    if request.method == 'GET':
+        carrinho = request.COOKIES.get('suit2goCart', '{\'items\':[]}')
+        form_endereco = CheckoutEnderecoForm()
+        form_data = CheckoutDataForm()
+        forms = {
+            "endereco": form_endereco,
+            "data": form_data
+        }
+        return render(request, 'checkout.html', { 'carrinho': ast.literal_eval(carrinho), 'forms': forms })
+
+    elif request.method == 'POST':
+        carrinhojson = request.COOKIES.get('suit2goCart', '{\'items\':[]}')
+        carrinho = ast.literal_eval(carrinhojson)
+        ids_produtos = [item['productId'] for item in carrinho["items"]]
+        
+        user = User.objects.get(id=request.user.id)
+        produtos = ProdutoVariacao.objects.filter(id__in=ids_produtos).all()
+        produtos_dict = {produto.id: produto for produto in produtos}
+        valor_total = sum([produtos_dict[int(item['productId'])].preco_aluguel * item["quantity"] for item in carrinho["items"]])
+        
+        locacao = Locacoes(
+            cliente_id=user,
+            valor_total=valor_total,
+            endereco_rua=request.POST.get("endereco_rua"),
+            endereco_numero=request.POST.get("endereco_numero"),
+            endereco_complemento=request.POST.get("endereco_complemento"),
+            endereco_bairro=request.POST.get("endereco_bairro"),
+            endereco_cidade=request.POST.get("endereco_cidade"),
+            endereco_cep=request.POST.get("endereco_cep"),
+            data_inicio=request.POST.get("data_inicio"),
+            data_termino=request.POST.get("data_termino"),
+        )
+        locacao.save()
+
+        for produto in carrinho["items"]:
+            variation = produtos_dict[int(produto['productId'])]
+            item = ItensLocacao(
+                locacao=locacao,
+                produto_variation= variation,
+                quantidade= produto["quantity"],
+                preco_unitario= variation.preco_aluguel
+            )
+            item.save()
+        return render(request, 'checkout_payment.html', { 'locacao_id': locacao.id })
+
+def get_checkout_session(request):
+    status_dict = get_session_status(request.GET.get('session_id'))
+    return JsonResponse(data=status_dict)
+
+def create_checkout_session(request):
+    if request.method == 'POST':
+        carrinhojson = request.COOKIES.get('suit2goCart', '{\'items\':[]}')
+        carrinho = ast.literal_eval(carrinhojson)
+        ids_produtos = [int(item['productId']) for item in carrinho["items"]]
+        
+        produtos = ProdutoVariacao.objects.filter(id__in=ids_produtos).all()
+        produtos_dict = {produto.id: produto for produto in produtos}
+        valor_total = sum([produtos_dict[int(item['productId'])].preco_aluguel * item["quantity"] for item in carrinho["items"]])
+        session = create_stripe_payment(valor_total)
+        return JsonResponse(data={ 'clientSecret': session.client_secret })
+
+def checkout_end(request):
+    return render(request, 'checkout_end.html')
 
 def logout_view(request):
     logout(request)
@@ -217,3 +294,4 @@ def authorize_google(request):
 def google_callback(request):
     # Lida com o retorno do Google após a autorização
     return redirect('/')
+

@@ -8,7 +8,9 @@
 from django.db import models
 from .utils import generate_file_name
 from django.contrib import admin
+from django.contrib.auth.models import User
 from allauth.socialaccount.models import SocialApp
+from taggit.managers import TaggableManager
 
 class Clientes(models.Model):
     id_clientes = models.AutoField(primary_key=True)
@@ -80,6 +82,7 @@ class Roupas(models.Model):
     nome = models.CharField(max_length=200, blank=True, null=True)
     categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE)
     estilo = models.ForeignKey(Estilo, on_delete=models.CASCADE)
+    tags = TaggableManager()
 
     def __str__(self):
         return self.nome
@@ -126,16 +129,21 @@ class FotosRoupaVariacao(models.Model):
         db_table = 'fotos_roupa_variacao'
 
 class Locacoes(models.Model):
-    cliente_id = models.ForeignKey(Clientes, on_delete=models.DO_NOTHING)
+    cliente_id = models.ForeignKey(User, on_delete=models.DO_NOTHING)
     data_inicio = models.DateField(blank=True, null=True)
     data_termino = models.DateField(blank=True, null=True)
     valor_total = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
     data_negociacao = models.DateTimeField(auto_now_add=True)
+    endereco_rua = models.CharField(max_length=200, blank=True, null=True)
+    endereco_numero = models.CharField(max_length=200, blank=True, null=True)
+    endereco_complemento = models.CharField(max_length=200, blank=True, null=True)
+    endereco_bairro = models.CharField(max_length=200, blank=True, null=True)
+    endereco_cidade = models.CharField(max_length=200, blank=True, null=True)
+    endereco_cep = models.CharField(max_length=200, blank=True, null=True)
     
     class Meta:
         managed = True
         db_table = 'locacoes'
-
 
 class ItensLocacao(models.Model):
     locacao = models.ForeignKey(Locacoes, on_delete=models.CASCADE)

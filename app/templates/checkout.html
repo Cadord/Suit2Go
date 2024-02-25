@@ -8,27 +8,20 @@
 <div>
   <h1>Pode ter um título aqui também se quiser</h1>
   <form action="{% url 'checkout' %}" method="post">
+    {% csrf_token %}
     <div id="passo1">
-      <h2>Primeira etapa</h2>
-      bla bla
+      <h2>Informe o endereço de entrega</h2>
+      {{ forms.endereco.as_p }}
       <div>
-        <button onclick="controlState('passo2')">Próximo</button>
+        <button type="button" onclick="controlState('passo2')">Próximo</button>
       </div>
     </div>
     <div id="passo2">
-      <h2>Segunda etapa</h2>
-      bla bla
+      <h2>Data da locação</h2>
+      {{ forms.data.as_p }}
       <div>
-        <button onclick="controlState('passo1')">Anterior</button>
-        <button onclick="controlState('passo3')">Próximo</button>
-      </div>
-    </div>
-    <div id="passo3">
-      <h2>Etapa final</h2>
-      bla bla
-      <div>
-        <button onclick="controlState('passo2')">Anterior</button>
-        <button type="submit">Finalizar</button>
+        <button type="button" onclick="controlState('passo1')">Anterior</button>
+        <button type="submit">Pagamento</button>
       </div>
     </div>
   </form>
@@ -36,7 +29,7 @@
 
 <script>
   // pode adicionar passos extras ou remover se necessário
-  var states = ["passo1", "passo2", "passo3"];
+  var states = ["passo1", "passo2"];
 
   // Esta função controla a visibilidade das etapas
   function controlState(currentState) {
@@ -47,11 +40,6 @@
     }
     document.getElementById(currentState).style.display = 'block';
   }
-
-  function finishCheckout() {
-    alert("POST to backend or convert button to form submit");
-  }
-
   controlState(states[0]);
 </script>
 {% endblock %}

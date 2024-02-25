@@ -12,14 +12,14 @@
                 <ul class="list-group">
                     {% for negotiation in negotiations %}
                         <li class="list-group-item">
-                            <p>Date: {{ negotiation.date }}</p>
+                            <p>Date: {{ negotiation.data_inicio }}</p>
                             <p>Items:</p>
                             <ul>
                                 {% for item in negotiation.items.all %}
                                     <li>{{ item.product_variation.roupa.nome }} - {{ item.quantity }} x R$ {{ item.price }}</li>
                                 {% endfor %}
                             </ul>
-                            <p>Total: R$ {{ negotiation.total }}</p>
+                            <p>Total: R$ {{ negotiation.valor_total }}</p>
                         </li>
                     {% endfor %}
                 </ul>

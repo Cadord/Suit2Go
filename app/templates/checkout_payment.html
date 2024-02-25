@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}Suit2Go - Carrinho{% endblock %}
+
+{% block content %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
+<form>
+  {% csrf_token %}
+  <div id="checkout">
+    <!-- Checkout will insert the payment form here -->
+  </div>
+</form>
+
+<script src="https://js.stripe.com/v3/"></script>
+<script src="{% static 'js/checkout.js' %}"></script>
+
+<script>
+  initializeCheckout();
+</script>
+{% endblock %}

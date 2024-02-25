@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}Suit2Go - Carrinho{% endblock %}
+
+{% block content %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
+<section id="success" class="hidden">
+  <p>
+    Obrigado pela confiança! Um e-mail de confirmação será enviado para <span id="customer-email"></span>.
+
+    Caso tenha qualquer dúvida, envie uma mensagem para <a href="mailto:orders@example.com">orders@example.com</a>.
+  </p>
+</section>
+
+<script>
+  initialize();
+
+  async function initialize() {
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const sessionId = urlParams.get('session_id');
+    const response = await fetch(`/get_checkout_session?session_id=${sessionId}`);
+    const session = await response.json();
+
+    if (session.status == 'open') {
+      window.replace('http://localhost:8000/checkout.html')
+    } else if (session.status == 'complete') {
+      document.getElementById('success').classList.remove('hidden');
+      document.getElementById('customer-email').textContent = session.customer_email
+    }
+
+    clearCart();
+  }
+</script>
+{% endblock %}

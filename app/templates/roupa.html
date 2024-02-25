@@ -41,7 +41,7 @@
                 <a href="#" class="category-icon">
                     <button class="icon">
                         <img src="{% static 'img/shoe.png' %}" width='30' alt='Calçados'>
-                        <p id='icon-descriver-roupa'  class='icon-describer'>Calçados</p>
+                        <p id='icon-descriver-roupa' class='icon-describer'>Calçados</p>
                     </button>
                 </a>
             </div>
@@ -57,7 +57,7 @@
             </div>
         </div>
     </div>
-</div>
+    </div>
 </header>
 <section class="py-5">
     <div id='roupa1'>
@@ -71,39 +71,46 @@
                 <!-- ESSE CAMPO está na variação agora: <span id='preco-aluguel'>R$ {{roupa.preco_aluguel}}</span> gluacio -->
                 {% comment %} <div class='fotos-roupas'>
                     <div class='fotos-all'>
-                    {% for variacaoFoto in variacao.fotosroupavariacao_set.all%}
+                        {% for variacaoFoto in variacao.fotosroupavariacao_set.all%}
                         <div class='foto-roupa'>
                             <img class='roupa-variacao' src="/media/{{variacaoFoto.fotoUrl}}"></img>
                         </div>
-                    {% endfor%}
+                        {% endfor%}
                     </div> {% endcomment %}
                     <img class='imagem-main' src='/media/{{roupa.fotosroupas_set.all.0.fotoUrl}}'>
                 </div>
                 <div>
                     <div class='details-section'>
-                        <h1  id="nome-roupa" class="display-5 fw-bolder">{{roupa.nome}}</h1>
+                        <h1 id="nome-roupa" class="display-5 fw-bolder">{{roupa.nome}}</h1>
                         <div id='preco-cartão'>
                             <img id='card-logo' src="{% static 'img/creditcard.png' %}">
-                            <h1 id='preco-alugar'> R$ {{variacao.preco_aluguel}}</h1>
+                            <h1> R$ <span id='preco-alugar'
+                                    data-default-price="{{variacao.preco_aluguel}}">{{variacao.preco_aluguel}}</span>
+                            </h1>
                         </div>
                         <div class='colors'>
                             <p>Cores:</p>
-                            {% for variacao in variacoes %}
-                                {% with primeira_foto=variacao.fotosroupavariacao_set.first %}
-                                    {% if primeira_foto %}
-                                            <img id='botao-roupa' class='roupa-variacao' src="/media/{{ primeira_foto.fotoUrl }}" alt="{{ primeira_foto.cor.titulo }}">
-                                    {% endif %}
-                                {% endwith %}
+                            {% for cor in cores %}
+                            <button type="button" data-color-id="{{cor.id}}" class="btn btn-color"
+                                style="background-color: {{cor.cor_code}};" onclick="selecionarCor({{cor.id}})">
+                                {{ cor.titulo }}</button>
                             {% endfor %}
                         </div>
                         <p>Tamanhos:</p>
                         <div class='tamanhos-container'>
-                            {% for tamanho in tamanhos %}
-                                <p class='tamanhos'>{{ tamanho }}</p>
+                            {% for variacao in variacoes %}
+                            <button type="button" data-color-id="{{variacao.cor.id}}"
+                                data-price="{{variacao.preco_aluguel}}" data-tamanho-id="{{ variacao.tamanho.id }}"
+                                data-variacao-id="{{variacao.id}}" class="btn btn-size" style="display:none"
+                                onclick="selecionarTamanho(this)">
+                                {{ variacao.tamanho.titulo }}
+                            </button>
                             {% endfor %}
+                            <p class="color-desc">Selectione uma cor</p>
                         </div>
                         <div class='botão-aluguel'>
-                            <button id='add-to-cart' class="btn btn-outline-dark flex-shrink-0" type="button" onclick="handleAddToCart('{{roupa.id_roupas}}', '{{roupa.nome}}')">
+                            <button id='add-to-cart' class="btn btn-outline-dark flex-shrink-0" type="button"
+                                disabled="true" onclick="handleAddToCart('{{roupa.nome}}')">
                                 Alugar
                             </button>
                         </div>
@@ -116,7 +123,7 @@
     </div>
     <div class="linha"></div>
     <div class='desc-container'>
-        <img class='desc-logo' src= '{% static "img/calendar.png" %}' />
+        <img class='desc-logo' src='{% static "img/calendar.png" %}' />
         <p class='desc'> Cancelamento gratuito em até 48 horas </p>
     </div>
     <div class='desc-container'>
@@ -130,30 +137,66 @@
 </section>
 <div class="linha"></div>
 <script>
-    var tamanhoSelecionado = null;
     var corSelecionado = null;
+    var variacaoId = null;
 
-    function selecionarTamanho(id) {
-        tamanhoSelecionado = id;
+    function selecionarTamanho(tamanho) {
+        variacaoId = tamanho.dataset.variacaoId;
+        var preco = tamanho.dataset.price;
+        var tamanhos = document.getElementsByClassName("btn-size")
+        document.getElementById("preco-alugar").innerText = preco
+
+        for (const t of tamanhos) {
+            if (tamanho.dataset.variacaoId == t.dataset.variacaoId) {
+                t.classList.add("select")
+            } else {
+                t.classList.remove("select")
+            }
+        }
+        document.querySelector(".color-desc").style.display = "false";
+        document.getElementById("add-to-cart").removeAttribute("disabled");
     }
 
-    function selecionarCor(id, imagemUrl) {
+    function selecionarCor(id) {
         corSelecionado = id;
-        atualizarImagemPrincipal(imagemUrl);
+        tamanhoSelecionado = null;
+        document.getElementById("preco-alugar").innerText = document.getElementById("preco-alugar").dataset.defaultPrice
+        var cores = document.getElementsByClassName("btn-color")
+        for (const cor of cores) {
+            if (cor.dataset.corId == id) {
+                cor.classList.add("select")
+            } else {
+                cor.classList.remove("select")
+            }
+        }
+
+        var tamanhos = document.getElementsByClassName("btn-size")
+        for (const tamanho of tamanhos) {
+            var corId = tamanho.dataset.colorId
+            if (corId == id) {
+                tamanho.style.display = "block"
+            } else {
+                tamanho.style.display = "none"
+            }
+        }
+        document.getElementById("add-to-cart").setAttribute("disabled", true);
+        document.querySelector(".color-desc").style.display = "none";
+
+        //atualizarImagemPrincipal(imagemUrl);
     }
 
     function atualizarImagemPrincipal(imagemUrl) {
         const imagemPrincipal = document.querySelector('.imagem-main');
         imagemPrincipal.setAttribute('src', imagemUrl);
     }
-    
-    document.addEventListener('DOMContentLoaded', function() {
+
+    document.addEventListener('DOMContentLoaded', function () {
         // Obtém todas as imagens de variação
         const imagensVariacao = document.querySelectorAll('.roupa-variacao');
 
         // Adiciona um evento de clique a cada imagem de variação
-        imagensVariacao.forEach(function(imagem) {
-            imagem.addEventListener('click', function() {
+        imagensVariacao.forEach(function (imagem) {
+            imagem.addEventListener('click', function () {
                 // Obtém o src da imagem de variação clicada
                 const src = imagem.getAttribute('src');
 
@@ -162,9 +205,9 @@
             });
         });
     });
-    function handleAddToCart(roupaId, name) {
-        addToCart(roupaId, name, 1);
-        alert("Produto adicionado");
+    function handleAddToCart(name) {
+        addToCart(variacaoId, name, 1);
+        alert(`Produto adicionado ${variacaoId}`);
     }
 </script>
 {% endblock %}

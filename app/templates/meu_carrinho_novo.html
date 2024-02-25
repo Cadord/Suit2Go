@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load static %}
+
+{% block title %}Suit2Go - Carrinho{% endblock %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
+
+<script>
+  const debouncedRefresh = debounce(() => location.reload(), 300);
+
+  function handleUpdateQuantity(productId, amount) {
+    const cart = getCart();
+    const updatedQuantity = updateCartProductQuantity(parseInt(productId), amount);
+    document.getElementById('itemQtd-' + productId).innerHTML = updatedQuantity;
+    // Calculate and update total price for the item
+    const itemPrice = parseFloat(document.getElementById('itemPrice-' + productId).innerText);
+    const totalItemPrice = itemPrice * updatedQuantity;
+    document.getElementById('itemTotal-' + productId).innerText = 'R$ ' + totalItemPrice.toFixed(2);
+  }
+
+  function handleRemoveFromCart(productId) {
+    removeFromCart(parseInt(productId));
+    alert('Produto removido do carrinho');
+    document.getElementById('cartItem-' + productId).remove();
+  }
+
+  function handleCheckout() {
+    // Implement your checkout logic here
+  }
+
+  function handleContinueShopping() {
+    alert('Continuar compras clicado');
+  }
+</script>
+
+<div class='carrinho-header'>
+  <img class='carrinho-icon' src="{% static 'img/shop-cart.png' %}">
+  <h2>Carrinho de compras</h2>
+</div>
+
+<div class="container">
+  <h1>Meu Carrinho</h1>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Item</th>
+        <th>Preço</th>
+        <th>Quantidade</th>
+        <th>Total</th>
+        <th>Ação</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in carrinho.items %}
+      <tr id="cartItem-{{ item.id }}">
+        <td>
+          <img src="{{ item.image_url }}" alt="{{ item.name }}" width="50">
+          {{ item.name }}
+        </td>
+        <td id="itemPrice-{{ item.id }}">R$ {{ item.price }}</td>
+        <td id="itemQtd-{{ item.id }}">{{ item.quantity }}</td>
+        <td id="itemTotal-{{ item.id }}">R$ {{ item.total_price }}</td>
+        <td>
+          <button onclick="handleUpdateQuantity('{{ item.id }}', -1)">-</button>
+          <button onclick="handleUpdateQuantity('{{ item.id }}', 1)">+</button>
+          <button onclick="handleRemoveFromCart('{{ item.id }}')">Remover</button>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+    <tfoot>
+      <tr>
+        <td colspan="3" class="text-right"><strong>Total:</strong></td>
+        <td><strong>R$ {{ total_price }}</strong></td>
+      </tr>
+    </tfoot>
+  </table>
+  <button onclick="handleCheckout()">Finalizar Compra</button>
+  <button onclick="handleContinueShopping()">Continuar Comprando</button>
+</div>
+{% endblock %}

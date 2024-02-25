@@ -19,6 +19,7 @@ environ.Env.read_env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_URL = 'http://localhost:8000'
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
@@ -45,7 +46,8 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
-    'django_migrate_or_rollback'
+    'django_migrate_or_rollback',
+    'taggit',
 ]
 
 MIDDLEWARE = [
@@ -58,6 +60,8 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'allauth.account.middleware.AccountMiddleware',
 ]
+
+TAGGIT_CASE_INSENSITIVE=True
 
 MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
 
@@ -135,9 +139,9 @@ SOCIALACCOUNT_LOGIN_ON_GET=True
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
         'APP': {
-            'client_id': '179596067338-qri4r6a7q468fk5qhj23rj5rhckmcmds.apps.googleusercontent.com',
-            'secret': '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',
-            'key': 'AIzaSyCQwrySeNZh2UJpiWFs8P6YsoJqpcLV3yk',
+            'client_id': env('GOOGLE_SOCIAL_CLIENT_ID'),
+            'secret': env('GOOGLE_SOCIAL_SECRET'),
+            'key': env('GOOGLE_SOCIAL_KEY'),
         },
         "SCOPE": [
             "profile",
@@ -149,6 +153,8 @@ SOCIALACCOUNT_PROVIDERS = {
         }
     }
 }
+
+STRIPE_API_KEY=env('STRIPE_API_KEY')
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
