@@ -277,7 +277,7 @@ font-size: 2vh;
   align-items: center;
   border: none; /* Remover a borda padrão */
   border-top: 2px solid black; /* Estilizar a linha */
-  width: 50%; /* Definir a largura da linha */
+  width:90%; /* Definir a largura da linha */
   margin-left: 5%;
 }
 
@@ -310,6 +310,15 @@ font-size: 2vh;
 }
 
 /* Garante que todos os cards tenham a mesma altura */
+
+#corpo-card {
+  font-family: 'Nunito',sans-serif;
+}
+
+#bot-card {
+  font-family: 'Nunito', sans-serif;
+}
+
 .card {
   height: 100%;
   
@@ -374,6 +383,15 @@ font-size: 2vh;
   display: flex;
 }
 
+.roupa-final {
+  font-family: 'Nunito', sans-serif;
+}
+
+#RS {
+  font-size: 25;
+  display: flex;
+}
+
 #preco-alugar {
   font-family: 'Nunito',sans-serif;
   font-size: 25px;
@@ -397,26 +415,6 @@ font-size: 2vh;
   margin: 5px;
 }
 
-.btn-color {
-  border: 1px solid black;
-}
-.btn-color:hover {
-  border: 1px solid black;
-}
-.btn-color.selected {
-  border: 1px solid #0d6efd;
-}
-
-.btn-size {
-  border: 1px solid black;
-}
-.btn-size:hover {
-  border: 1px solid black;
-}
-.btn-size.selected {
-  border: 1px solid #0d6efd;
-}
-
 .carrinho-header{
   display: flex;
   font-family: 'Nunito', sans-serif;
@@ -431,26 +429,33 @@ font-size: 2vh;
 }
 
 .cart {
+
   font-family: 'Nunito', sans-serif;
+  margin-left: 30px;
+  margin-bottom: 30px;
 }
 
 .cart-prod-quant {
   border: 2px solid;
+  padding: 10px;
+ 
 }
 
 #cartItem {
   border: 2px solid;
+  padding: 10px;
 
 }
 
 #cart-none {
   border: 2px solid;
+  padding: 10px;
 }
 
 .details-section {
     position: absolute;
     right: 40%;
-    top: 42%;
+    top: 38%;
 }
 
 .colors {
@@ -483,4 +488,117 @@ font-size: 2vh;
 
 .tamanhos {
   margin-right: 10px; /* Adicione um espaço à direita entre os tamanhos */
+}
+#valoralugar {
+  font-family: 'Nunito', sans-serif;
+  font-size: x-large;
+}
+
+#checkoutbutton {
+  font-family: 'Nunito',sans-serif;
+  color: black;
+  text-decoration: none;
+  border: 2px solid;
+  border-radius: 100px;
+  padding: 5px;
+  margin-top: 30%;
+}
+
+#checkoutbutton:hover {
+  font-family: 'Nunito',sans-serif;
+  background-color: black;
+  color: white;
+  text-decoration: none;
+  border: 2px solid;
+  border-color: black;
+  border-radius: 100px;
+  margin-top: 30px;
+  padding: 5px;
+}
+
+#itenscarrinho{
+  margin: 30px;
+}
+
+#passo1{
+  margin: 30px;
+}
+
+.botaop2 {
+  margin-top: 5%;
+}
+
+.carrinhoheader {
+  display: flex;
+}
+
+.frete-container {
+  font-family: 'Nunito', sans-serif;
+  padding: 10px;
+  background: lightgray;
+  position: absolute;
+  left: 70%;
+  top: 13%;
+  border-radius: 10px;
+}
+
+.opt2 {
+  margin-bottom: 10%;
+}
+
+#linha-step{
+  margin-left: 0%;
+  margin-bottom: 5%;
+  margin-top: 5%;
+  width: 100%;
+}
+
+
+.stepper-1 {
+  padding: 5px;
+  border-radius: 30px;
+  margin-top: 20px;
+  margin-left: 30px;
+  font-family: 'Nunito', sans-serif;
+  width: 600px;
+  background-color: lightgray;
+}
+
+#id_endereco_rua {
+  margin-left: 70px;
+}
+
+#id_endereco_numero {
+  margin-left: 42px;
+}
+
+#id_endereco_bairro {
+  margin-left: 56px ;
+}
+
+#id_endereco_cidade {
+  margin-left: 50px ;
+}
+
+#id_endereco_cep {
+  margin-left: 71px ;
+}
+
+.botao-step {
+  border: 2px solid;
+  border-color: black;
+  font-family: 'Nunito',sans-serif;
+  background-color: lightgray;
+  padding: 6px;
+  border-radius: 30px;
+}
+
+.botao-step:hover {
+  border: 2px solid;
+  color: white;
+  border-color: black;
+  font-family: 'Nunito',sans-serif;
+  background-color: black;
+  padding: 6px;
+  border-radius: 30px;
 }

@@ -29,7 +29,7 @@
   }
 </script>
 
-<div>
+<div class='carrinhocontainer'>
   <div class='carrinho-header'>
     <img class='carrinho-icon' src="{% static  'img/shop-cart.png' %}">
     <h2>Carrinho de compras</h2>
@@ -42,12 +42,14 @@
         <th>Produto</th>
         <th>Quantidade</th>
         <th></th>
+        <th>Valor Total</th>
       </tr>
     </thead>
-    <tbody>
+    <tbody id='itenscarrinho'>
     {% for item in carrinho.items %}
       <tr id="cartItem-{{item.productId}}">
-        <td>{{item.name}}</td>
+        <td id='itemcarrinho'>{{item.name}}</td>
+        <td id='itemcarrinho'>{{item.preco}}</td>
         <td>
           <span id="itemQtd-{{item.productId}}">{{item.quantity}}</span>
           <button onclick="handleUpdateQuantity('{{item.productId}}', -1)">-</button>
@@ -66,9 +68,36 @@
     {% endif %}
     </tbody>
     <tfoot>
-      <a href="{% url 'checkout' %}" >Checkout</a>
+      
     </tfoot>
   </table>
   {% endif %}
+</div>
+<div class='frete-container'>
+  <div>
+    <h>Frete</h1>
+  </div>
+  <div>
+    <label>
+      <input type="radio" name="escolha" value="opcao1"> Retirada em guichê - Grátis
+    </label>
+    <br>
+    <label>
+      <input class='opt2' type="radio" name="escolha" value="opcao2"> Retirada em local desejado - Calcular
+    </label>
+  </div>
+  <div id='linha-step' class='linha'>
+  </div>
+  <div>
+    Itens Adicionados
+  </div>
+  <div>
+    Preço total:
+  </div>
+  <div id='linha-step' class='linha'>
+  </div>
+  <div>
+    <a id='checkoutbutton' href="{% url 'checkout' %}" >Checkout</a>
+  </div>
 </div>
 {% endblock %}

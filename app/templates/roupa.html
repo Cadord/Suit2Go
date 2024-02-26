@@ -79,12 +79,12 @@
                     </div> {% endcomment %}
                     <img class='imagem-main' src='/media/{{roupa.fotosroupas_set.all.0.fotoUrl}}'>
                 </div>
-                <div>
+                <div class='roupa-final'>
                     <div class='details-section'>
                         <h1 id="nome-roupa" class="display-5 fw-bolder">{{roupa.nome}}</h1>
                         <div id='preco-cartão'>
                             <img id='card-logo' src="{% static 'img/creditcard.png' %}">
-                            <h1> R$ <span id='preco-alugar'
+                            <h1 id='RS'> R$ <span id='preco-alugar'
                                     data-default-price="{{variacao.preco_aluguel}}">{{variacao.preco_aluguel}}</span>
                             </h1>
                         </div>

@@ -5,23 +5,22 @@
 {% block content %}
 {% load static %}
 <link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
-<div>
-  <h1>Pode ter um título aqui também se quiser</h1>
+<div class='stepper-1'>
   <form action="{% url 'checkout' %}" method="post">
     {% csrf_token %}
     <div id="passo1">
       <h2>Informe o endereço de entrega</h2>
       {{ forms.endereco.as_p }}
       <div>
-        <button type="button" onclick="controlState('passo2')">Próximo</button>
+        <button  class='botao-step' type="button" onclick="controlState('passo2')">Próximo</button>
       </div>
     </div>
     <div id="passo2">
       <h2>Data da locação</h2>
       {{ forms.data.as_p }}
       <div>
-        <button type="button" onclick="controlState('passo1')">Anterior</button>
-        <button type="submit">Pagamento</button>
+        <button class='botao-step' type="button" onclick="controlState('passo1')">Anterior</button>
+        <button class='botao-step' type="submit">Pagamento</button>
       </div>
     </div>
   </form>
