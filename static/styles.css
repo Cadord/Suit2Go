@@ -192,8 +192,7 @@ font-size: 2vh;
 }
 
 .icon-container {
-  margin-bottom: 10px; /* Ajuste o valor conforme necessário */
-  padding: 50px;
+  margin: 50px;
 }
 
 .col-4 {
@@ -217,14 +216,6 @@ font-size: 2vh;
 
 #calçado {
   margin-top: 50px;
-}
-
-#base-footer {
-  margin-top: 30%;
-}
-
-.footer-container {
-  margin-bottom: 5%;
 }
 
 .nunito {
@@ -364,7 +355,7 @@ font-size: 2vh;
   margin-left: 5%;
   margin-top: 7%;
   display: flex;
-  width: 380px;
+  width: auto;
   height: 380px;
 }
 
@@ -475,7 +466,7 @@ font-size: 2vh;
 .imagem-card {
   width: 100%; /* Ensures the image fills the width of its container */
   height: 100%; /* Ensures the image fills the height of its container */
-  object-fit: fill; /* Ensures the aspect ratio is maintained while covering the entire container */
+  object-fit: cover; /* Ensures the aspect ratio is maintained while covering the entire container */
 }
 
 #botao-roupa {
@@ -522,7 +513,15 @@ font-size: 2vh;
   margin: 30px;
 }
 
+.cart td, .cart th {
+  padding: 10px 20px
+}
+
 #passo1{
+  margin: 30px;
+}
+
+#passo2{
   margin: 30px;
 }
 
@@ -535,8 +534,9 @@ font-size: 2vh;
 }
 
 .frete-container {
+  min-width: 350px;
   font-family: 'Nunito', sans-serif;
-  padding: 10px;
+  padding: 30px 20px;
   background: lightgray;
   position: absolute;
   left: 70%;
@@ -564,6 +564,14 @@ font-size: 2vh;
   font-family: 'Nunito', sans-serif;
   width: 600px;
   background-color: lightgray;
+}
+
+.stepper-1 .form-control {
+  background-color: white;
+}
+
+.stepper-1 .botao-step {
+  background-color: white;
 }
 
 #id_endereco_rua {
@@ -603,6 +611,33 @@ font-size: 2vh;
   background-color: black;
   padding: 6px;
   border-radius: 30px;
+}
+
+.btn-color {
+  border: 1px solid black;
+  height: 20px !important;
+  width: 20px !important;
+  border-radius: 100%;
+}
+
+.btn-color.select {
+  border: 1px solid #007bff;
+}
+
+.btn-size {
+  border: 1px solid black;
+}
+.btn-size:hover {
+  border: 1px solid black;
+}
+
+.btn-size.select {
+  border: 1px solid #007bff;
+}
+
+.cart-item-image {
+  max-height: 50px;
+  width: auto;
 }
 
 .carrossel-bg {

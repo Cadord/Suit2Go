@@ -216,8 +216,21 @@ def user_profile(request):
 
 def meu_carrinho(request):
     carrinho = request.COOKIES.get('suit2goCart', '{\'items\':[]}')
-    print(carrinho)
-    return render(request, 'meu_carrinho.html', { 'carrinho': ast.literal_eval(carrinho) })
+    carrinho = ast.literal_eval(carrinho)
+    context = {
+        'carrinho': [],
+        'valorTotal': 0
+    }
+    for item in carrinho["items"]:
+        produto = ProdutoVariacao.objects.get(pk=item["productId"])
+        context["carrinho"].append({
+            'quantity':  item["quantity"],
+            'produto': produto
+        })
+
+        context["valorTotal"] = context["valorTotal"] + (item["quantity"] * produto.preco_aluguel)
+
+    return render(request, 'meu_carrinho.html', context)
 
 def checkout(request):
     if request.method == 'GET':

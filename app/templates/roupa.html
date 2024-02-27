@@ -11,7 +11,7 @@
                 <a href="#" class="category-icon">
                     <button class="icon">
                         <img src="{% static 'img/man.png' %}" width='10' alt='Roupas Masculinas'>
-                        <p id='icon-descriver-roupa' class='icon-describer'>Roupas Masculinas</p>
+                        <p id='icon-descriver-roupa' class='icon-describer'>Masculinas</p>
                     </button>
                 </a>
             </div>
@@ -21,7 +21,7 @@
                 <a href="#" class="category-icon">
                     <button class="icon">
                         <img src="{% static 'img/woman.png' %}" width='12.5' alt='Roupas Femininas'>
-                        <p id='icon-descriver-roupa' class='icon-describer'>Roupas Femininas</p>
+                        <p id='icon-descriver-roupa' class='icon-describer'>Femininas</p>
                     </button>
                 </a>
             </div>
@@ -51,7 +51,7 @@
                 <a href="#" class="category-icon">
                     <button class="icon">
                         <img src="{% static 'img/heart.png' %}" width='25' alt='Favoritos'>
-                        <p id='icon-descriver-roupa' class='icon-describer'>Favoritos</p>
+                        <p id='icon-descriver-roupa' class='icon-describer'>Acessórios</p>
                     </button>
                 </a>
             </div>
@@ -77,7 +77,7 @@
                         </div>
                         {% endfor%}
                     </div> {% endcomment %}
-                    <img class='imagem-main' src='/media/{{roupa.fotosroupas_set.all.0.fotoUrl}}'>
+                    <img class='imagem-main img-fluid' src='/media/{{roupa.fotosroupas_set.all.0.fotoUrl}}'>
                 </div>
                 <div class='roupa-final'>
                     <div class='details-section'>
@@ -91,9 +91,9 @@
                         <div class='colors'>
                             <p>Cores:</p>
                             {% for cor in cores %}
-                            <button type="button" data-color-id="{{cor.id}}" class="btn btn-color"
-                                style="background-color: {{cor.cor_code}};" onclick="selecionarCor({{cor.id}})">
-                                {{ cor.titulo }}</button>
+                            <button type="button" data-color-id="{{cor.id}}" class="btn-color"
+                                style="background-color: {{cor.cor_code}};"
+                                onclick="selecionarCor({{cor.id}})"></button>
                             {% endfor %}
                         </div>
                         <p>Tamanhos:</p>
@@ -163,7 +163,7 @@
         document.getElementById("preco-alugar").innerText = document.getElementById("preco-alugar").dataset.defaultPrice
         var cores = document.getElementsByClassName("btn-color")
         for (const cor of cores) {
-            if (cor.dataset.corId == id) {
+            if (cor.dataset.colorId == corSelecionado) {
                 cor.classList.add("select")
             } else {
                 cor.classList.remove("select")

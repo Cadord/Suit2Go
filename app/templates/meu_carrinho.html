@@ -9,16 +9,26 @@
 <script>
   const debouncedRefresh = debounce(() => location.relod(), 300);
 
-  function handleUpdateQuantity(productId, amount) {
+  function handleUpdateQuantity(productId, amount, price) {
     const cart = getCart();
     const updatedQuantity = updateCartProductQuantity(productId, amount);
-    document.getElementById('itemQtd-'+productId).innerHTML = updatedQuantity;
+    document.getElementById('itemQtd-' + productId).innerHTML = updatedQuantity;
+    if (updatedQuantity <= 0) {
+      alert('Produto removido do carrinho');
+      document.getElementById('cartItem-' + productId).remove();
+    }
+
+    // Update cart value
+    const priceDelta = parseFloat(price) * amount;
+    const totalEl = document.getElementById("total-carrinho");
+    const currentTotal = parseFloat(totalEl.innerHTML);
+    totalEl.innerHTML = (currentTotal + priceDelta).toFixed(2);
   }
 
   function handleRemoveFromCart(productId) {
     removeFromCart(productId);
     alert('Produto removido do carrinho');
-    document.getElementById('cartItem-'+productId).remove();
+    document.getElementById('cartItem-' + productId).remove();
   }
 
   function handleCheckout() {
@@ -28,56 +38,58 @@
     alert('Continuar compras clicked');
   }
 </script>
-
 <div class='carrinhocontainer'>
   <div class='carrinho-header'>
     <img class='carrinho-icon' src="{% static  'img/shop-cart.png' %}">
     <h2>Carrinho de compras</h2>
   </div>
 
-  {% if carrinho %}
   <table class='cart' id="tableCartItems">
-    <thead class = 'cart-prod-quant'>
+    <thead class='cart-prod-quant'>
       <tr>
+        <th></th>
         <th>Produto</th>
+        <th>Valor Total</th>
         <th>Quantidade</th>
         <th></th>
-        <th>Valor Total</th>
       </tr>
     </thead>
     <tbody id='itenscarrinho'>
-    {% for item in carrinho.items %}
-      <tr id="cartItem-{{item.productId}}">
-        <td id='itemcarrinho'>{{item.name}}</td>
-        <td id='itemcarrinho'>{{item.preco}}</td>
+      {% for item in carrinho %}
+      <tr id="cartItem-{{item.produto.id}}">
         <td>
-          <span id="itemQtd-{{item.productId}}">{{item.quantity}}</span>
-          <button onclick="handleUpdateQuantity('{{item.productId}}', -1)">-</button>
-          <button onclick="handleUpdateQuantity('{{item.productId}}', 1)">+</button>
+          <img src="media/{{ item.produto.fotosroupavariacao_set.all.0.fotoUrl }}" alt="{{ item.produto.name }}"
+            class="cart-item-image">
+        </td>
+        <td id='itemcarrinho'>{{item.produto.produto.nome}}</td>
+        <td id='itemcarrinho'>R$ {{item.produto.preco_aluguel}}</td>
+        <td>
+          <span id="itemQtd-{{item.produto.id}}">{{item.quantity}}</span>
+          <button onclick="handleUpdateQuantity('{{item.produto.id}}', -1, '{{item.produto.preco_aluguel}}')">-</button>
+          <button onclick="handleUpdateQuantity('{{item.produto.id}}', 1, '{{item.produto.preco_aluguel}}')">+</button>
         </td>
         <td>
-          <button onclick="handleRemoveFromCart('{{item.productId}}')">X</button>
+          <button onclick="handleRemoveFromCart('{{item.produto.id}}')">X</button>
         </td>
       </tr>
-    {% endfor %}
-  
-    {% if carrinho.items|length == 0 %}
+      {% endfor %}
+
+      {% if carrinho|length == 0 %}
       <tr>
-        <td id='cart-none' colspan="3">Nenhum item no carrinho</td>
+        <td id='cart-none' colspan="5">Nenhum item no carrinho</td>
       </tr>
-    {% endif %}
+      {% endif %}
     </tbody>
     <tfoot>
-      
+
     </tfoot>
   </table>
-  {% endif %}
 </div>
 <div class='frete-container'>
   <div>
-    <h>Frete</h1>
+    <h>Resumo</h1>
   </div>
-  <div>
+  <!-- <div>
     <label>
       <input type="radio" name="escolha" value="opcao1"> Retirada em guichê - Grátis
     </label>
@@ -85,19 +97,16 @@
     <label>
       <input class='opt2' type="radio" name="escolha" value="opcao2"> Retirada em local desejado - Calcular
     </label>
+  </div> -->
+  <div id='linha-step' class='linha'>
+  </div>
+  <div>
+    Preço total: R$ <span id="total-carrinho">{{ valorTotal }}</span>
   </div>
   <div id='linha-step' class='linha'>
   </div>
   <div>
-    Itens Adicionados
-  </div>
-  <div>
-    Preço total:
-  </div>
-  <div id='linha-step' class='linha'>
-  </div>
-  <div>
-    <a id='checkoutbutton' href="{% url 'checkout' %}" >Checkout</a>
+    <a id='checkoutbutton' href="{% url 'checkout' %}">Checkout</a>
   </div>
 </div>
 {% endblock %}

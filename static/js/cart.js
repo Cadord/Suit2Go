@@ -39,8 +39,9 @@ function updateCartProductQuantity(productId, quantity) {
     product.quantity += quantity;
     if (product.quantity <= 0) {
       removeFromCart(productId);
+    } else {
+      saveCart(cart);
     }
-    saveCart(cart);
     updateCartCount();
     return product.quantity;
   }

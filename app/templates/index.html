@@ -63,14 +63,14 @@
                     <a href="#" class="category-icon">
                         <button class="icon">
                             <img src="{% static 'img/heart.png' %}" width='25' alt='Favoritos'>
-                            <p class='icon-describer'>Favoritos</p>
+                            <p class='icon-describer'>Acessórios</p>
                         </button>
                     </a>
                 </div>
             </div>
         </div>
     </div>
-    {% if not is_search %}
+    {% if false %}
         <div class='d-flex align-items-center justify-content-center vh-100'>
             <div class='carrossel-bg'>
                 <div id="carouselExample" class="carousel slide">
@@ -78,7 +78,7 @@
                         <div id='foto-carrossel' class="carousel-inner">
                             {% for index, roupa in roupas_enumeradas %}
                                 <div class="carousel-item {% if index == 0 %}active{% endif %}">
-                                    <img src="/media/{{ roupa.fotosroupas_set.all.0.fotoUrl }}" width="500" height="500" class="d-block w-100" alt="...">
+                                    <img src="/media/{{ roupa.fotosroupas_set.all.0.fotoUrl }}" width="500" height="500" class="d-block w-100 img-fluid" alt="...">
                                 </div>
                             {% endfor %}
                         </div>
@@ -98,7 +98,7 @@
     </div>
 </header>
 <!-- Section-->
-<section class="py-5">
+<section>
     <div class="container px-4 px-lg-5 mt-5">
         <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
             {% if roupas %}
