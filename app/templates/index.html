@@ -72,22 +72,26 @@
     </div>
     {% if not is_search %}
         <div class='d-flex align-items-center justify-content-center vh-100'>
-            <div id="carouselExample" class="carousel slide">
-                <div class="carousel-inner">
-                    {% for index, roupa in roupas_enumeradas %}
-                        <div class="carousel-item {% if index == 0 %}active{% endif %}">
-                            <img src="/media/{{ roupa.fotosroupas_set.all.0.fotoUrl }}" width="500" height="500" class="d-block w-100" alt="...">
+            <div class='carrossel-bg'>
+                <div id="carouselExample" class="carousel slide">
+                    
+                        <div id='foto-carrossel' class="carousel-inner">
+                            {% for index, roupa in roupas_enumeradas %}
+                                <div class="carousel-item {% if index == 0 %}active{% endif %}">
+                                    <img src="/media/{{ roupa.fotosroupas_set.all.0.fotoUrl }}" width="500" height="500" class="d-block w-100" alt="...">
+                                </div>
+                            {% endfor %}
                         </div>
-                    {% endfor %}
+                    
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
                 </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Previous</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Next</span>
-                </button>
             </div>
         </div>
         {% endif %}
